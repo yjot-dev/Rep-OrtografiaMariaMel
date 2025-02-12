@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="short1_dp">3dp</dimen>
+    <dimen name="short2_dp">6dp</dimen>
+    <dimen name="short3_dp">9dp</dimen>
+    <dimen name="short4_dp">15dp</dimen>
+    <dimen name="short5_dp">30dp</dimen>
+    <dimen name="short6_dp">45dp</dimen>
+    <dimen name="short7_dp">60dp</dimen>
+    <dimen name="medium1_dp">80dp</dimen>
+    <dimen name="medium2_dp">100dp</dimen>
+    <dimen name="medium3_dp">150dp</dimen>
+    <dimen name="medium4_dp">170dp</dimen>
+    <dimen name="medium5_dp">200dp</dimen>
+    <dimen name="medium6_dp">225dp</dimen>
+    <dimen name="long1_dp">250dp</dimen>
+    <dimen name="long2_dp">300dp</dimen>
+    <dimen name="long3_dp">450dp</dimen>
+    <dimen name="long4_dp">600dp</dimen>
+    <dimen name="long5_dp">700dp</dimen>
+</resources>
