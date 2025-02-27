@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,13 +28,16 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.ortografiamariamel.ui.viewModel.PlayerViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.ortografiamariamel.data.DataSourceGame1
 import com.example.ortografiamariamel.data.DataSourceGame2
+import com.example.ortografiamariamel.data.DataSourceGame3
 import com.example.ortografiamariamel.ui.theme.Typography
 import com.example.ortografiamariamel.ui.views.ActivityView
 import com.example.ortografiamariamel.ui.views.utils.CoverView
@@ -60,9 +62,11 @@ enum class RoutesViews(@StringRes val title: Int){
 }
 
 //Listas del juego 1 (Una lista por unidad)
-val listUnit1Game1 = DataSourceGame1.listPairOfCards1
-//Listas del juego 2 ()
-val listUnitsGame2 = DataSourceGame2.listQuestionAndAnswers
+val listUnit1Game1 = DataSourceGame1.listPairOfCardsUnit1
+//Listas del juego 2 (Una lista por unidad)
+val listUnit1Game2 = DataSourceGame2.listQuestionAndAnswersUnit1
+//Listas del juego 3 (Una lista por unidad)
+val listUnit1Game3 = DataSourceGame3.listQuestionAndAnswersUnit1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +111,7 @@ fun TopBarScreen(
             if(canNavigateBack){
                 IconButton(onClick = navigateUp){
                     Icon(
-                        imageVector = Icons.Default.ArrowBack,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.button_back),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -120,13 +124,13 @@ fun TopBarScreen(
 
 @Composable
 fun AppScreen(
-    navController: NavHostController
+    navController: NavHostController = rememberNavController()
 ){
-    val vmPlayer = PlayerViewModel()
-    val uiStatePlayer by vmPlayer.uiState.collectAsState()
     val backStackEntry by navController.currentBackStackEntryAsState()
+    val vmPlayer: PlayerViewModel = viewModel()
     val currentScreen = RoutesViews.valueOf(
-        backStackEntry?.destination?.route ?: RoutesViews.Start.name)
+        backStackEntry?.destination?.route ?: RoutesViews.Start.name
+    )
     Scaffold(
         topBar = {
             TopBarScreen(
@@ -149,18 +153,13 @@ fun AppScreen(
             }
             composable(route = RoutesViews.Register.name){
                 RegisterView(
-                    valueName = uiStatePlayer.name,
-                    onValueChangeName = { vmPlayer.setName(it) },
-                    valueAge = uiStatePlayer.age.toFloat(),
-                    onValueChangeAge = { vmPlayer.setAge(it.toInt()) },
+                    vmPlayer = vmPlayer,
                     onNextClicked = { navController.navigate(RoutesViews.Menu.name) },
-                    enabledNextButton = uiStatePlayer.name.isNotBlank(),
                     modifier = Modifier.fillMaxSize()
                 )
             }
             composable(route = RoutesViews.Menu.name){
                 MenuView(
-                    vmPlayer = vmPlayer,
                     onCoverClicked = { navController.navigate(RoutesViews.Cover.name) },
                     onTopic1Clicked = { navController.navigate(RoutesViews.TopicUnit1.name) },
                     onTopic2Clicked = { navController.navigate(RoutesViews.TopicUnit2.name) },
@@ -185,13 +184,12 @@ fun AppScreen(
                 ActivityView(
                     vmPlayer = vmPlayer,
                     numberUnit = stringResource(R.string.button_unit_1),
-                    list1Game1 = listUnit1Game1,
-                    list2Game1 = listUnit1Game1.shuffled(),
-                    listGame2 = listUnitsGame2,
-                    indexGame2 = 0, //0 y 1
+                    listGame1 = listUnit1Game1,
+                    listGame2 = listUnit1Game2,
+                    listGame3 = listUnit1Game3,
                     onReturnClicked = { navController.popBackStack(
                         RoutesViews.Start.name, false
-                    ) },
+                    )},
                     modifier = Modifier.fillMaxSize()
                 )
             }

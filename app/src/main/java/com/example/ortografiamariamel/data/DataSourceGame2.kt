@@ -6,9 +6,9 @@ Ejemplo de palabras monosílabas con y sin acentuación
 https://ejerciciode.com/ejercicios-de-palabras-monosilabas/?=
 */
 object DataSourceGame2 {
-    val listQuestionAndAnswers = listOf(
+    val listQuestionAndAnswersUnit1 = listOf(
         Game2Model(
-            question = listOf("¿"," (Te/Té) vienes mañana a tomar un "," (te/té)?"),
+            question = listOf("¿ "," (Te/Té) vienes a tomar un "," (te/té) mañana?"),
             listCorrectAnswers = listOf("Te","té"),
             listOptionsAnswers = listOf("Te","Té","te","té")
         ),

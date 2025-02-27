@@ -37,9 +37,8 @@ fun StartView(
         RecyclerButton(
             textButton = stringResource(R.string.button_start),
             modifier = Modifier
-                .weight(1f)
                 .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
-                .fillMaxWidth(0.5f),
+                .fillMaxWidth(0.7f),
             onClick = onStartClicked
         )
     }

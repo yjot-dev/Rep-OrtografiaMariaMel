@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -32,10 +33,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -46,16 +48,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.ortografiamariamel.R
 import com.example.ortografiamariamel.ui.model.Game1Model
 import com.example.ortografiamariamel.ui.model.Game2Model
+import com.example.ortografiamariamel.ui.model.Game3Model
 import com.example.ortografiamariamel.ui.theme.OrtografiaMariaMelTheme
 import com.example.ortografiamariamel.ui.theme.Typography
-import com.example.ortografiamariamel.ui.viewModel.Game2ViewModel
-import com.example.ortografiamariamel.ui.viewModel.Game1ViewModel
 import com.example.ortografiamariamel.ui.viewModel.PlayerViewModel
 import com.example.ortografiamariamel.ui.views.utils.BackGroundImage
 import com.example.ortografiamariamel.ui.views.utils.CoverView
 import com.example.ortografiamariamel.ui.views.utils.GifImage
 import com.example.ortografiamariamel.ui.views.utils.RecyclerButton
-import kotlinx.coroutines.delay
 
 //Número de lecciones a revisar por unidad incluyendo la ventana puntaje
 private const val NUM_LESSONS = 4
@@ -66,33 +66,28 @@ private const val NUM_LIFE = 3
 fun ActivityView(
     modifier: Modifier = Modifier,
     numberUnit: String,
-    list1Game1: List<Game1Model>,
-    list2Game1: List<Game1Model>,
+    listGame1: List<Game1Model>,
     listGame2: List<Game2Model>,
-    indexGame2: Int,
+    listGame3: List<Game3Model>,
     vmPlayer: PlayerViewModel,
     onReturnClicked: () -> Unit
 ){
     //Instancias de los estados ViewModel
     val uiStatePlayer by vmPlayer.uiState.collectAsState()
-    val vmGame1 = Game1ViewModel()
-    val vmGame2 = Game2ViewModel()
+    var nextLesson by remember { mutableIntStateOf(1) }
     //Instancia de reproductor de sonido
     val context = LocalContext.current
     val sound1 = remember { MediaPlayer.create(context, R.raw.sound_one) }
     val sound2 = remember { MediaPlayer.create(context, R.raw.sound_two) }
     val sound3 = remember { MediaPlayer.create(context, R.raw.sound_three) }
-    //Condicion para ir a siguiente o reiniciar
-    val condition0 = uiStatePlayer.finishGame && uiStatePlayer.error == NUM_LIFE
-    val condition1 = uiStatePlayer.nextLesson < NUM_LESSONS
-    val condition2 = uiStatePlayer.nextLesson == NUM_LESSONS || condition0
-    val condition3 = uiStatePlayer.finishGame && condition1
-    LaunchedEffect(key1 = uiStatePlayer.error){
-        if(!uiStatePlayer.finishGame && uiStatePlayer.error == NUM_LIFE){
-            delay(800)
-            vmPlayer.setFinishGame(true)
-        }
-    }
+    //Condicion para ir a la siguiente leccion y mostrar animacion 1
+    val condition1 = uiStatePlayer.finishGame && nextLesson < NUM_LESSONS
+    //Condicion para finalizar juego si gana el jugador
+    val condition2 = nextLesson == NUM_LESSONS
+    //Condicion para finalizar juego si pierde el jugador y mostrar animacion 2
+    val condition3 = uiStatePlayer.error == NUM_LIFE
+    //Condicion para mostrar la leccion actual
+    val condition4 = !uiStatePlayer.finishGame && nextLesson < NUM_LESSONS
     DisposableEffect(key1 = Unit){
         onDispose {
             sound1.stop()
@@ -106,6 +101,7 @@ fun ActivityView(
         modifier = modifier.background(MaterialTheme.colorScheme.onPrimary),
         contentAlignment = Alignment.Center
     ){
+        //Escenario de fondo del juego
         if(uiStatePlayer.idScenery != 0){
             CoverView(
                 idImage = uiStatePlayer.idScenery,
@@ -114,54 +110,66 @@ fun ActivityView(
                     .fillMaxWidth(),
                 alpha = 0.7f)
         }
+        //Animaciones y vista del juego
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = modifier
+            verticalArrangement = Arrangement.SpaceEvenly
         ){
-            AnimatedVisibility(
-                visible = condition0,
-                enter = scaleIn(),
-                exit = scaleOut()){
-                MessageAnimation(
-                    idMessage = R.string.game_over,
-                    modifier = Modifier
-                        .fillMaxHeight(0.87f)
-                        .fillMaxWidth(0.8f)
-                )
-            }
-            if(!condition0){
-                AnimatedVisibility(
-                    visible = condition3,
-                    enter = scaleIn(),
-                    exit = scaleOut()){
-                    MessageAnimation(
-                        idMessage = R.string.game_finish_lesson,
-                        modifier = Modifier
-                            .fillMaxHeight(0.87f)
-                            .fillMaxWidth(0.8f)
-                    )
-                }
-                if(!condition3){
-                    if(condition1){
-                        ProgressBar(
-                            numLesson = uiStatePlayer.nextLesson,
-                            numError = uiStatePlayer.error,
-                            modifier = Modifier.weight(1f)
+            when{
+                condition1 -> {
+                    AnimatedVisibility(
+                        visible = true,
+                        enter = scaleIn(),
+                        exit = scaleOut()){
+                        MessageAnimation(
+                            idMessage = R.string.game_finish_lesson,
+                            modifier = Modifier
+                                .fillMaxHeight(0.87f)
+                                .fillMaxWidth(0.94f)
                         )
                     }
+                }
+                condition2 -> {
+                    sound3.stop()
+                    vmPlayer.setIdScenery(0)
+                    ScorePlayer(
+                        vmPlayer = vmPlayer,
+                        numberUnit = numberUnit,
+                        modifier = Modifier
+                            .fillMaxHeight(0.87f)
+                            .fillMaxWidth()
+                    )
+                }
+                condition3 -> {
+                    AnimatedVisibility(
+                        visible = true,
+                        enter = scaleIn(),
+                        exit = scaleOut()){
+                        MessageAnimation(
+                            idMessage = R.string.game_over,
+                            modifier = Modifier
+                                .fillMaxHeight(0.87f)
+                                .fillMaxWidth(0.94f)
+                        )
+                    }
+                }
+                condition4 -> {
+                    ProgressBar(
+                        numLesson = nextLesson,
+                        numError = uiStatePlayer.error
+                    )
                     //Muestra la leccion inicial y siguiente
-                    when(uiStatePlayer.nextLesson){
+                    when(nextLesson){
                         1 -> {
                             vmPlayer.setIdScenery(R.drawable.scenery_one)
                             sound1.start()
                             GameOfCards(
                                 vmPlayer = vmPlayer,
-                                vmGame = vmGame1,
                                 finalResult = 6,
-                                listPairOfCard = list1Game1,
-                                listRandom = list2Game1,
-                                modifier = Modifier.fillMaxHeight(0.76f)
+                                listPairOfCard = listGame1,
+                                modifier = Modifier
+                                    .fillMaxHeight(0.87f)
+                                    .fillMaxWidth()
                             )
                         }
                         2 -> {
@@ -170,57 +178,45 @@ fun ActivityView(
                             sound2.start()
                             GameOfAnswerSelection(
                                 vmPlayer = vmPlayer,
-                                vmGame = vmGame2,
-                                finalResult = 8,
-                                questionIndex = indexGame2,
+                                finalResult = 10,
                                 listQuestionsAnswers = listGame2,
-                                modifier = Modifier.fillMaxHeight(0.76f)
+                                modifier = Modifier
+                                    .fillMaxHeight(0.87f)
+                                    .fillMaxWidth()
                             )
                         }
                         3 -> {
                             sound2.stop()
                             vmPlayer.setIdScenery(R.drawable.scenery_three)
                             sound3.start()
-                            GameOfAnswerSelection(
+                            GameOfAnswerWriting(
                                 vmPlayer = vmPlayer,
-                                vmGame = vmGame2,
-                                finalResult = 10,
-                                questionIndex = indexGame2 + 1,
-                                listQuestionsAnswers = listGame2,
-                                modifier = Modifier.fillMaxHeight(0.76f)
-                            )
-                        }
-                        4 -> {
-                            sound3.stop()
-                            vmPlayer.setIdScenery(0)
-                            ScorePlayer(
-                                vmPlayer = vmPlayer,
-                                numberUnit = numberUnit,
-                                modifier = Modifier.fillMaxHeight(0.87f)
+                                finalResult = 12,
+                                listQuestionsAnswers = listGame3,
+                                modifier = Modifier
+                                    .fillMaxHeight(0.87f)
+                                    .fillMaxWidth()
                             )
                         }
                     }
-                }else vmPlayer.setIdScenery(0)
-            }else vmPlayer.setIdScenery(0)
+                }
+            }
             RecyclerButton(
                 textButton =
-                    if(condition1) stringResource(R.string.button_next)
+                    if(!condition2) stringResource(R.string.button_next)
                     else stringResource(R.string.button_restart),
-                isEnabled = uiStatePlayer.finishGame,
+                isEnabled = condition1 || condition2 || condition3,
                 modifier = Modifier
-                    .weight(1f)
                     .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
-                    .fillMaxWidth(0.5f),
+                    .fillMaxWidth(0.7f),
                 onClick = {
-                    //Pasa al siguiente juego y finaliza el actual
+                    //Pasa al siguiente juego y resetea el actual
                     if(condition1){
-                        vmPlayer.setNextLesson(uiStatePlayer.nextLesson + 1)
-                        vmGame1.resetGame()
-                        vmGame2.resetGame()
+                        nextLesson += 1
                         vmPlayer.setFinishGame(false)
                     }
                     //Regresa al inicio y finaliza partida
-                    if(condition2){
+                    if(condition2 || condition3){
                         vmPlayer.resetPlayer()
                         onReturnClicked()
                     }
@@ -286,14 +282,14 @@ private fun ProgressBar(
                 .padding(horizontal = dimensionResource(R.dimen.short4_dp))
         ){
             LinearProgressIndicator(
-                progress = numLesson.toFloat()/(NUM_LESSONS - 1),
-                color = MaterialTheme.colorScheme.primaryContainer,
+                progress = { numLesson.toFloat() / (NUM_LESSONS - 1) },
                 modifier = Modifier
                     .weight(1f)
                     .sizeIn(
                         minHeight = dimensionResource(R.dimen.short2_dp),
                         maxHeight = dimensionResource(R.dimen.short3_dp)
-                    )
+                    ),
+                color = MaterialTheme.colorScheme.primaryContainer,
             )
             Icon(
                 imageVector = Icons.Default.Favorite,
@@ -316,14 +312,11 @@ private fun ScorePlayer(
     vmPlayer: PlayerViewModel
 ){
     val uiStatePlayer by vmPlayer.uiState.collectAsState()
-    vmPlayer.setFinishGame(true)
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     ){
-        BackGroundImage(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight())
+        BackGroundImage(modifier = modifier)
         Card(
             border = BorderStroke(
                 width = dimensionResource(id = R.dimen.short2_dp),
@@ -425,8 +418,8 @@ private fun ScoreItems(
 private fun PreviewScorePlayer() {
     OrtografiaMariaMelTheme {
         ScorePlayer(
-            modifier = Modifier.fillMaxHeight(1f),
-            numberUnit = stringResource(R.string.button_unit_1),
+            modifier = Modifier.fillMaxSize(),
+            numberUnit = "1",
             vmPlayer = PlayerViewModel()
         )
     }

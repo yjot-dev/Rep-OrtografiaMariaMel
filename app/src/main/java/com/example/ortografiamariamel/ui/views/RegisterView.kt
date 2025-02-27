@@ -18,6 +18,8 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.ortografiamariamel.R
 import com.example.ortografiamariamel.ui.theme.OrtografiaMariaMelTheme
 import com.example.ortografiamariamel.ui.theme.Typography
+import com.example.ortografiamariamel.ui.viewModel.PlayerViewModel
 import com.example.ortografiamariamel.ui.views.utils.RecyclerButton
 
 //Edad minima y maxima del jugador
@@ -39,60 +42,50 @@ private const val maxAge: Float = 18f
 
 @Composable
 fun RegisterView(
-    valueName: String,
-    onValueChangeName: (String) -> Unit,
-    valueAge: Float,
-    onValueChangeAge: (Float) -> Unit,
+    vmPlayer: PlayerViewModel,
     onNextClicked: () -> Unit,
-    enabledNextButton: Boolean,
     modifier: Modifier = Modifier
 ){
+    //Variables de la IU
+    val uiStatePlayer by vmPlayer.uiState.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)
     ){
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxHeight(0.87f)
-                .fillMaxWidth(0.8f)
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.app_name),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxWidth(0.7f)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.app_pencil),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxHeight(0.5f)
-            )
-            WriteName(
-                labelId = R.string.write_name,
-                keyboardOption = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next),
-                value = valueName,
-                onValueChange = onValueChangeName
-            )
-            ChooseAge(
-                labelId1 = R.string.choose_age,
-                labelId2 = R.string.slider_age,
-                value = valueAge,
-                onValueChange = onValueChangeAge
-            )
-        }
+        Image(
+            painter = painterResource(id = R.drawable.app_name),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier.fillMaxWidth(0.7f)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.app_pencil),
+            contentDescription = null,
+            contentScale = ContentScale.Fit
+        )
+        WriteName(
+            labelId = R.string.write_name,
+            keyboardOption = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next),
+            value = uiStatePlayer.name,
+            onValueChange = { vmPlayer.setName(it) },
+            modifier = Modifier.fillMaxWidth(0.7f)
+        )
+        ChooseAge(
+            labelId1 = R.string.choose_age,
+            labelId2 = R.string.slider_age,
+            value = uiStatePlayer.age.toFloat(),
+            onValueChange = { vmPlayer.setAge(it.toInt()) },
+            modifier = Modifier.fillMaxWidth(0.7f)
+        )
         RecyclerButton(
             textButton = stringResource(R.string.button_next),
-            isEnabled = enabledNextButton,
+            isEnabled = uiStatePlayer.name.isNotBlank(),
             modifier = Modifier
-                .weight(1f)
                 .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
-                .fillMaxWidth(0.5f),
+                .fillMaxWidth(0.7f),
             onClick = onNextClicked
         )
     }
@@ -106,24 +99,19 @@ private fun WriteName(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ){
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier.padding(dimensionResource(id = R.dimen.short1_dp))
-    ){
-        Text(
-            text = stringResource(id = labelId),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = Typography.titleLarge
-        )
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
-            keyboardOptions = keyboardOption,
-            singleLine = true,
-            modifier = Modifier.testTag("tag_write_name")
-        )
-    }
+    Text(
+        modifier = modifier,
+        text = stringResource(id = labelId),
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        style = Typography.titleLarge
+    )
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        keyboardOptions = keyboardOption,
+        singleLine = true,
+        modifier = modifier.testTag("tag_write_name")
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,40 +123,36 @@ private fun ChooseAge(
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier
 ){
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier.padding(dimensionResource(id = R.dimen.short1_dp))
-    ){
-        Text(
-            text = stringResource(id = labelId1),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = Typography.titleLarge
-        )
-        Slider(
-            value = value,
-            onValueChange = onValueChange,
-            valueRange = minAge..maxAge,
-            steps = (maxAge - minAge).toInt(),
-            colors = SliderDefaults.colors(
-                activeTrackColor = MaterialTheme.colorScheme.primaryContainer
-            ),
-            thumb = {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_register),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxHeight(0.5f)
-                )
-            },
-            modifier = Modifier.testTag("tag_choose_age")
-        )
-        Text(
-            text = stringResource(id = labelId2, value.toInt()),
-            color = MaterialTheme.colorScheme.primaryContainer,
-            style = Typography.titleLarge
-        )
-    }
+    Text(
+        text = stringResource(id = labelId1),
+        color = MaterialTheme.colorScheme.onPrimaryContainer,
+        style = Typography.titleLarge,
+        modifier = modifier
+    )
+    Slider(
+        value = value,
+        onValueChange = onValueChange,
+        valueRange = minAge..maxAge,
+        steps = (maxAge - minAge).toInt(),
+        colors = SliderDefaults.colors(
+            activeTrackColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        thumb = {
+            Image(
+                painter = painterResource(id = R.drawable.logo_register),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxHeight(0.5f)
+            )
+        },
+        modifier = modifier.testTag("tag_choose_age")
+    )
+    Text(
+        text = stringResource(id = labelId2, value.toInt()),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        style = Typography.titleLarge,
+        modifier = modifier
+    )
 }
 
 @Preview(
@@ -179,13 +163,9 @@ private fun ChooseAge(
 private fun PreviewRegisterView() {
     OrtografiaMariaMelTheme {
         RegisterView(
-            modifier = Modifier.fillMaxSize(),
-            valueName = "Yasser",
-            onValueChangeName = {},
-            valueAge = 11f,
-            onValueChangeAge = {},
+            vmPlayer = PlayerViewModel(),
             onNextClicked = {},
-            enabledNextButton = false
+            modifier = Modifier.fillMaxSize()
         )
     }
 }

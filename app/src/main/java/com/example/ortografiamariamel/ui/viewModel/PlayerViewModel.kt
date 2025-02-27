@@ -20,16 +20,16 @@ class PlayerViewModel : ViewModel() {
     override fun onCleared() {
         resetPlayer()
     }
-    /** Cambio de nombre del jugador por partida **/
-    fun setName(currentName: String){
+    /** Cambia nombre del jugador **/
+    fun setName(name: String){
         _uiState.update { currentState ->
-            currentState.copy(name = currentName)
+            currentState.copy(name = name)
         }
     }
-    /** Cambio de la edad del jugador por partida **/
-    fun setAge(currentAge: Int){
+    /** Cambia edad del jugador **/
+    fun setAge(age: Int){
         _uiState.update { currentState ->
-            currentState.copy(age = currentAge)
+            currentState.copy(age = age)
         }
     }
     /** Cambio de preguntas correctas por partida **/
@@ -58,48 +58,6 @@ class PlayerViewModel : ViewModel() {
     fun setIdScenery(idImage: Int){
         _uiState.update { currentState ->
             currentState.copy(idScenery = idImage)
-        }
-    }
-    /** Cambio de puntero de siguiente leccion **/
-    fun setNextLesson(currentLesson: Int){
-        _uiState.update { currentState ->
-            currentState.copy(nextLesson = currentLesson)
-        }
-    }
-    /** Cambio de puntero del boton atras y seguir **/
-    fun setNextUnit(currentUnit: Int){
-        _uiState.update { currentState ->
-            currentState.copy(nextUnit = currentUnit)
-        }
-    }
-    /** Mostrar y ocultar menu e items **/
-    fun setVisibleMenu(state: Boolean){
-        _uiState.update { currentState ->
-            currentState.copy(visibleMenu = state)
-        }
-    }
-    /** Cambio de estado item1 **/
-    fun setVisibleItem1(state: Boolean){
-        _uiState.update { currentState ->
-            currentState.copy(visibleItem1 = state)
-        }
-    }
-    /** Cambio de estado item2 **/
-    fun setVisibleItem2(state: Boolean){
-        _uiState.update { currentState ->
-            currentState.copy(visibleItem2 = state)
-        }
-    }
-    /** Cambio de estado item3 **/
-    fun setVisibleItem3(state: Boolean){
-        _uiState.update { currentState ->
-            currentState.copy(visibleItem3 = state)
-        }
-    }
-    /** Cambio de estado item4 **/
-    fun setVisibleItem4(state: Boolean){
-        _uiState.update { currentState ->
-            currentState.copy(visibleItem4 = state)
         }
     }
     /** Finaliza el juego **/

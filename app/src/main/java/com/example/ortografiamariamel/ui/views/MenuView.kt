@@ -23,7 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,8 +31,12 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -45,13 +49,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.ortografiamariamel.R
 import com.example.ortografiamariamel.ui.theme.OrtografiaMariaMelTheme
 import com.example.ortografiamariamel.ui.theme.Typography
-import com.example.ortografiamariamel.ui.viewModel.PlayerViewModel
 import com.example.ortografiamariamel.ui.views.utils.RecyclerButton
 
 @Composable
 fun MenuView(
     modifier: Modifier = Modifier,
-    vmPlayer: PlayerViewModel = PlayerViewModel(),
     onCoverClicked: () -> Unit,
     onTopic1Clicked: () -> Unit,
     onTopic2Clicked: () -> Unit,
@@ -62,10 +64,12 @@ fun MenuView(
     onActivity3Clicked: () -> Unit,
     onActivity4Clicked: () -> Unit
     ){
-    //Instancias de los estados ViewModel
-    val uiStatePlayer by vmPlayer.uiState.collectAsState()
-    val condition1 = uiStatePlayer.nextUnit == 1 //primer vista
-    val condition2 = uiStatePlayer.nextUnit == 5 //ultima vista
+    //Variables de la IU
+    var nextUnit by remember { mutableIntStateOf(1) }
+    var visibleMenu by remember { mutableStateOf(false) }
+    val visibleItems = remember { mutableStateListOf(false, false, false, false) }
+    val condition1 = nextUnit == 1 //primer vista
+    val condition2 = nextUnit == 5 //ultima vista
     Box(
         modifier = modifier.background(MaterialTheme.colorScheme.onPrimary),
         contentAlignment = Alignment.TopStart)
@@ -75,7 +79,7 @@ fun MenuView(
             verticalArrangement = Arrangement.Center,
             modifier = modifier
         ) {
-            when(uiStatePlayer.nextUnit){
+            when(nextUnit){
                 1 -> UnitsCoverGroup(
                     modifier = Modifier.fillMaxHeight(0.87f)
                 )
@@ -121,22 +125,20 @@ fun MenuView(
                     modifier = Modifier
                         .fillMaxHeight(0.9f)
                         .weight(1f),
-                    onClick = {
-                        vmPlayer.setNextUnit(uiStatePlayer.nextUnit - 1)
-                    })
+                    onClick = { nextUnit -= 1 }
+                )
                 RecyclerButton(
                     textButton = stringResource(id = R.string.button_up),
                     isEnabled = !condition2,
                     modifier = Modifier
                         .fillMaxHeight(0.9f)
                         .weight(1f),
-                    onClick = {
-                        vmPlayer.setNextUnit(uiStatePlayer.nextUnit + 1)
-                    })
+                    onClick = { nextUnit += 1 }
+                )
             }
         }
         AnimatedVisibility(
-            visible = uiStatePlayer.visibleMenu,
+            visible = visibleMenu,
             enter = slideInHorizontally(),
             exit = slideOutHorizontally()
         ){
@@ -177,11 +179,12 @@ fun MenuView(
                     ))
                     ItemMenu(
                         itemText = "1",
-                        isVisible = uiStatePlayer.visibleItem1,
-                        onVisible = { vmPlayer.setVisibleItem1(!uiStatePlayer.visibleItem1)
-                            vmPlayer.setVisibleItem2(false)
-                            vmPlayer.setVisibleItem3(false)
-                            vmPlayer.setVisibleItem4(false)
+                        isVisible = visibleItems[0],
+                        onVisible = {
+                            visibleItems[0] = !visibleItems[0]
+                            visibleItems[1] = false
+                            visibleItems[2] = false
+                            visibleItems[3] = false
                         },
                         onTopicClicked = onTopic1Clicked,
                         onActivityClicked = onActivity1Clicked,
@@ -198,11 +201,12 @@ fun MenuView(
                     ))
                     ItemMenu(
                         itemText = "2",
-                        isVisible = uiStatePlayer.visibleItem2,
-                        onVisible = { vmPlayer.setVisibleItem2(!uiStatePlayer.visibleItem2)
-                            vmPlayer.setVisibleItem1(false)
-                            vmPlayer.setVisibleItem3(false)
-                            vmPlayer.setVisibleItem4(false)
+                        isVisible = visibleItems[1],
+                        onVisible = {
+                            visibleItems[1] = !visibleItems[1]
+                            visibleItems[0] = false
+                            visibleItems[2] = false
+                            visibleItems[3] = false
                         },
                         onTopicClicked = onTopic2Clicked,
                         onActivityClicked = onActivity2Clicked,
@@ -219,11 +223,12 @@ fun MenuView(
                     ))
                     ItemMenu(
                         itemText = "3",
-                        isVisible = uiStatePlayer.visibleItem3,
-                        onVisible = { vmPlayer.setVisibleItem3(!uiStatePlayer.visibleItem3)
-                            vmPlayer.setVisibleItem1(false)
-                            vmPlayer.setVisibleItem2(false)
-                            vmPlayer.setVisibleItem4(false)
+                        isVisible = visibleItems[2],
+                        onVisible = {
+                            visibleItems[2] = !visibleItems[2]
+                            visibleItems[0] = false
+                            visibleItems[1] = false
+                            visibleItems[3] = false
                         },
                         onTopicClicked = onTopic3Clicked,
                         onActivityClicked = onActivity3Clicked,
@@ -240,11 +245,12 @@ fun MenuView(
                     ))
                     ItemMenu(
                         itemText = "4",
-                        isVisible = uiStatePlayer.visibleItem4,
-                        onVisible = { vmPlayer.setVisibleItem4(!uiStatePlayer.visibleItem4)
-                            vmPlayer.setVisibleItem1(false)
-                            vmPlayer.setVisibleItem2(false)
-                            vmPlayer.setVisibleItem3(false)
+                        isVisible = visibleItems[3],
+                        onVisible = {
+                            visibleItems[3] = !visibleItems[3]
+                            visibleItems[0] = false
+                            visibleItems[1] = false
+                            visibleItems[2] = false
                         },
                         onTopicClicked = onTopic4Clicked,
                         onActivityClicked = onActivity4Clicked,
@@ -266,18 +272,18 @@ fun MenuView(
             containerColor = MaterialTheme.colorScheme.onPrimary
                 .copy(0.8f),
             onClick = {
-                vmPlayer.setVisibleMenu(!uiStatePlayer.visibleMenu)
-                vmPlayer.setVisibleItem1(false)
-                vmPlayer.setVisibleItem2(false)
-                vmPlayer.setVisibleItem3(false)
-                vmPlayer.setVisibleItem4(false)
+                visibleMenu = !visibleMenu
+                visibleItems[0] = false
+                visibleItems[1] = false
+                visibleItems[2] = false
+                visibleItems[3] = false
             })
         {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                imageVector = Icons.Default.List,
+                imageVector = Icons.AutoMirrored.Filled.List,
                 contentDescription = null,
                 colorFilter = ColorFilter
                     .tint(MaterialTheme.colorScheme.primaryContainer))

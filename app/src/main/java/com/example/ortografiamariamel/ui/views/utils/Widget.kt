@@ -6,9 +6,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -99,7 +96,7 @@ fun BackGroundImage(
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier
     ){
         Image(
@@ -108,29 +105,24 @@ fun BackGroundImage(
             colorFilter = ColorFilter
                 .tint(MaterialTheme.colorScheme.onPrimaryContainer),
             contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxWidth(0.2f)
+            contentScale = ContentScale.Fit
         )
         Image(
             painter = painterResource(id = R.drawable.app_pencil),
             alpha = alpha,
             contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxHeight(0.7f)
+            contentScale = ContentScale.Fit
         )
         Text(
             text = stringResource(id = R.string.start_title),
             color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = alpha),
-            style = Typography.titleLarge,
-            modifier = Modifier
-                .padding(vertical = dimensionResource(id = R.dimen.short3_dp))
+            style = Typography.titleLarge
         )
         Image(
             painter = painterResource(id = R.drawable.app_name),
             alpha = alpha,
             contentDescription = null,
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxWidth(0.5f)
+            contentScale = ContentScale.Fit
         )
     }
 }
