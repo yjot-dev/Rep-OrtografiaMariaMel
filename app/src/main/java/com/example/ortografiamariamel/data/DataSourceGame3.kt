@@ -1,6 +1,6 @@
 package com.example.ortografiamariamel.data
 
-import com.example.ortografiamariamel.ui.model.Game3Model
+import com.example.ortografiamariamel.mvvm.model.Game3Model
 
 /*
 ¿Cuáles son los tipos de tilde diacrítica?

@@ -13,7 +13,9 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.ortografiamariamel.ui.theme.OrtografiaMariaMelTheme
+import com.example.ortografiamariamel.navigation.NavigationView
+import com.example.ortografiamariamel.navigation.ViewRoutes
+import com.example.ortografiamariamel.theme.OrtografiaMariaMelTheme
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -34,16 +36,16 @@ class NavigationViewInstrumentedTest {
         }
         composeTestRule.setContent {
             OrtografiaMariaMelTheme{
-                AppScreen(navController = navController)
+                NavigationView(navController = navController)
             }
         }
         //Verifica si esta en la pagina inicial
-        assertEquals(RoutesViews.Start.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Start.name, navController.currentBackStackEntry?.destination?.route)
         //Navega a la siguiente pagina
         composeTestRule.onNodeWithText(context.getString(R.string.button_start))
             .performClick()
         //Verifica si esta en la pagina de registro
-        assertEquals(RoutesViews.Register.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Register.name, navController.currentBackStackEntry?.destination?.route)
         //Escribe el nombre del jugador
         composeTestRule.onNodeWithTag("tag_write_name")
             .performTextInput("Yasser")
@@ -58,19 +60,19 @@ class NavigationViewInstrumentedTest {
         composeTestRule.onNodeWithText(context.getString(R.string.button_next))
             .performClick()
         //Verifica si esta en la pagina de menu
-        assertEquals(RoutesViews.Menu.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
         composeTestRule.onNodeWithTag("Menu").performClick()
         //Navega a la pagina de portada
         composeTestRule.onNodeWithText(context.getString(R.string.button_cover))
             .performClick()
         //Verifica si esta en la pagina de portada
-        assertEquals(RoutesViews.Cover.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Cover.name, navController.currentBackStackEntry?.destination?.route)
         //Navega hacia atras
         composeTestRule.onNodeWithContentDescription(context.getString(R.string.button_back))
             .performClick()
         //Verifica si esta en la pagina de menu
-        assertEquals(RoutesViews.Menu.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
         composeTestRule.onNodeWithTag("Menu").performClick()
         //Despliega opciones de la unidad 1
@@ -80,12 +82,12 @@ class NavigationViewInstrumentedTest {
         composeTestRule.onNodeWithTag("tema_1")
             .performClick()
         //Verifica si esta en la pagina del tema de la unidad 1
-        assertEquals(RoutesViews.TopicUnit1.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.TopicUnit1.name, navController.currentBackStackEntry?.destination?.route)
         //Navega hacia atras
         composeTestRule.onNodeWithContentDescription(context.getString(R.string.button_back))
             .performClick()
         //Verifica si esta en la pagina de menu
-        assertEquals(RoutesViews.Menu.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
         composeTestRule.onNodeWithTag("Menu").performClick()
         //Despliega opciones de la unidad 1
@@ -95,6 +97,6 @@ class NavigationViewInstrumentedTest {
         composeTestRule.onNodeWithTag("actividad_1")
             .performClick()
         //Verifica si esta en la pagina de la actividad de la unidad 1
-        assertEquals(RoutesViews.ActivityUnit1.name, navController.currentBackStackEntry?.destination?.route)
+        assertEquals(ViewRoutes.ActivityUnit1.name, navController.currentBackStackEntry?.destination?.route)
     }
 }

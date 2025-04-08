@@ -1,6 +1,6 @@
 package com.example.ortografiamariamel.data
 
-import com.example.ortografiamariamel.ui.model.Game2Model
+import com.example.ortografiamariamel.mvvm.model.Game2Model
 /*
 Ejemplo de palabras monosílabas con y sin acentuación
 https://ejerciciode.com/ejercicios-de-palabras-monosilabas/?=
