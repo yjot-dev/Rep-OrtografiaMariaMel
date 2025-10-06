@@ -22,8 +22,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,11 +38,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ortografiamariamel.R
 import com.example.ortografiamariamel.theme.OrtografiaMariaMelTheme
@@ -283,7 +283,7 @@ fun MenuView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                imageVector = Icons.AutoMirrored.Filled.List,
+                imageVector = ImageVector.vectorResource(id = R.drawable.menu_48),
                 contentDescription = null,
                 colorFilter = ColorFilter
                     .tint(MaterialTheme.colorScheme.primaryContainer))

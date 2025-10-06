@@ -18,13 +18,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -44,6 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ortografiamariamel.R
 import com.example.ortografiamariamel.mvvm.model.Game1Model
@@ -293,7 +287,7 @@ private fun ProgressBar(
                 color = MaterialTheme.colorScheme.primaryContainer,
             )
             Icon(
-                imageVector = Icons.Default.Favorite,
+                imageVector = ImageVector.vectorResource(id = R.drawable.favorite_48),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.error
             )
@@ -310,7 +304,7 @@ private fun ProgressBar(
 private fun ScorePlayer(
     modifier: Modifier = Modifier,
     numberUnit: String,
-    vmPlayer: PlayerViewModel
+    vmPlayer: PlayerViewModel = PlayerViewModel()
 ){
     val uiStatePlayer by vmPlayer.uiState.collectAsState()
     Box(
@@ -344,7 +338,7 @@ private fun ScorePlayer(
                 ))
                 ScoreItems(
                     textItem = stringResource(id = R.string.game_player, uiStatePlayer.name.uppercase()),
-                    iconItem = Icons.Default.AccountBox
+                    iconItem = ImageVector.vectorResource(id = R.drawable.player_48)
                 )
                 Spacer(modifier = Modifier.sizeIn(
                     minHeight = dimensionResource(R.dimen.short1_dp),
@@ -352,7 +346,7 @@ private fun ScorePlayer(
                 ))
                 ScoreItems(
                     textItem = stringResource(id = R.string.game_age, uiStatePlayer.age),
-                    iconItem = Icons.Default.Face
+                    iconItem = ImageVector.vectorResource(id = R.drawable.age_48)
                 )
                 Spacer(modifier = Modifier.sizeIn(
                     minHeight = dimensionResource(R.dimen.short1_dp),
@@ -360,7 +354,7 @@ private fun ScorePlayer(
                 ))
                 ScoreItems(
                     textItem = stringResource(id = R.string.game_score, uiStatePlayer.score),
-                    iconItem = Icons.Default.Star
+                    iconItem = ImageVector.vectorResource(id = R.drawable.score_48)
                 )
                 Spacer(modifier = Modifier.sizeIn(
                     minHeight = dimensionResource(R.dimen.short1_dp),
@@ -368,7 +362,7 @@ private fun ScorePlayer(
                 ))
                 ScoreItems(
                     textItem = stringResource(id = R.string.game_success, uiStatePlayer.success),
-                    iconItem = Icons.Default.Check
+                    iconItem = ImageVector.vectorResource(id = R.drawable.correct_48)
                 )
                 Spacer(modifier = Modifier.sizeIn(
                     minHeight = dimensionResource(R.dimen.short1_dp),
@@ -376,7 +370,7 @@ private fun ScorePlayer(
                 ))
                 ScoreItems(
                     textItem = stringResource(id = R.string.game_error, uiStatePlayer.error),
-                    iconItem = Icons.Default.Clear
+                    iconItem = ImageVector.vectorResource(id = R.drawable.incorrect_48)
                 )
             }
         }
@@ -420,8 +414,7 @@ private fun PreviewScorePlayer() {
     OrtografiaMariaMelTheme {
         ScorePlayer(
             modifier = Modifier.fillMaxSize(),
-            numberUnit = "1",
-            vmPlayer = PlayerViewModel()
+            numberUnit = "1"
         )
     }
 }
