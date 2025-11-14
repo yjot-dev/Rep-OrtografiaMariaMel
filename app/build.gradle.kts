@@ -1,26 +1,26 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.compose.compiler)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.ortografiamariamel"
-    compileSdk = 36
+    namespace = "com.yjotdev.ortografiamariamel"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.ortografiamariamel"
+        applicationId = "com.yjotdev.ortografiamariamel"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 3
-        versionName = "3.3"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        targetSdk = 35
+        versionCode = 4
+        versionName = "3.4"
+        testInstrumentationRunner = "com.yjotdev.ortografiamariamel.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
     }
-
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -38,11 +38,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         resources {
@@ -52,6 +56,10 @@ android {
             useLegacyPackaging = false
         }
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-Xlint:deprecation")
 }
 
 dependencies {
@@ -77,13 +85,20 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
 
+    // --- Hilt ---
+    implementation(libs.dagger.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.dagger.hilt.android.compiler)
+
     // --- Testing ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.navigation.testing) // Importante para testear navegación
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
 
     // --- Debug ---
     debugImplementation(libs.androidx.compose.ui.tooling)
