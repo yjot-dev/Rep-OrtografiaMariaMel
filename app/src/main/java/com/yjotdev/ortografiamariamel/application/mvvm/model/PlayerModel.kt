@@ -20,6 +20,8 @@ data class PlayerModel(
     val error: Int = 0,
     //Puntaje total de la partida
     val score: Int = 0,
+    //Leccion actual de la actividad
+    val currentLesson: Int = 1,
     //Id de imagen del escenario
     @DrawableRes val idScenery: Int = 0,
     //Comprobar si finalizo el juego

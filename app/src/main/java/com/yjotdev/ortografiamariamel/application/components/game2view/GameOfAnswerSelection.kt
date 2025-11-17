@@ -113,7 +113,7 @@ fun Option(
 
 @ComponentPreview
 @Composable
-private fun PreviewGame2View() {
+private fun PreviewGameOfAnswerSelection() {
     OrtografiaMariaMelTheme {
         GameOfAnswerSelection(
             modifier = Modifier.fillMaxSize(),

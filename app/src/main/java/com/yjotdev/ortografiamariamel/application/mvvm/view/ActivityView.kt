@@ -20,15 +20,11 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -58,6 +54,7 @@ fun ActivityView(
     listGame2: List<Game2Entity>,
     listGame3: List<Game3Entity>,
     numLessons: Int,
+    currentLesson: Int,
     numLife: Int,
     name: String,
     age: Int,
@@ -70,23 +67,22 @@ fun ActivityView(
     onError: (Int) -> Unit,
     onIdScenery: (Int) -> Unit,
     onFinishGame: (Boolean) -> Unit,
+    onCurrentLesson: (Int) -> Unit,
     onReturnClicked: () -> Unit
 ){
-    //Instancias de los estados ViewModel
-    var nextLesson by remember { mutableIntStateOf(1) }
     //Instancia de reproductor de sonido
     val context = LocalContext.current
     val sound1 = remember { MediaPlayer.create(context, R.raw.sound_one) }
     val sound2 = remember { MediaPlayer.create(context, R.raw.sound_two) }
     val sound3 = remember { MediaPlayer.create(context, R.raw.sound_three) }
     //Condicion para ir a la siguiente leccion y mostrar animacion 1
-    val condition1 = finishGame && nextLesson < numLessons
+    val condition1 = finishGame && currentLesson < numLessons
     //Condicion para finalizar juego si gana el jugador
-    val condition2 = nextLesson == numLessons
+    val condition2 = currentLesson == numLessons
     //Condicion para finalizar juego si pierde el jugador y mostrar animacion 2
     val condition3 = error == numLife
     //Condicion para mostrar la leccion actual
-    val condition4 = !finishGame && nextLesson < numLessons
+    val condition4 = !finishGame && currentLesson < numLessons
     DisposableEffect(key1 = Unit){
         onDispose {
             sound1.stop()
@@ -157,14 +153,8 @@ fun ActivityView(
                     }
                 }
                 condition4 -> {
-                    ProgressBar(
-                        currentLesson = nextLesson,
-                        totalLesson = numLessons,
-                        numLife = numLife,
-                        numError = error
-                    )
                     //Muestra la leccion inicial y siguiente
-                    when(nextLesson){
+                    when(currentLesson){
                         1 -> {
                             onIdScenery(R.drawable.scenery_one)
                             sound1.start()
@@ -229,7 +219,7 @@ fun ActivityView(
                 onClick = {
                     //Pasa al siguiente juego y resetea el actual
                     if(condition1){
-                        nextLesson += 1
+                        onCurrentLesson(currentLesson + 1)
                         onFinishGame(false)
                     }
                     //Regresa al inicio y finaliza partida
@@ -269,56 +259,6 @@ private fun MessageAnimation(
             )
             GifImage(idImage = R.drawable.student_two_animated,
                 modifier = Modifier.weight(1f)
-            )
-        }
-    }
-}
-
-@Composable
-private fun ProgressBar(
-    modifier: Modifier = Modifier,
-    currentLesson: Int,
-    totalLesson: Int,
-    numLife: Int,
-    numError: Int
-){
-    Column(
-        modifier = modifier
-            .padding(vertical = dimensionResource(R.dimen.short2_dp))
-            .background(MaterialTheme.colorScheme.onPrimary.copy(0.7f))
-    ) {
-        Text(
-            text = stringResource(id = R.string.activity_unit),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(
-                space = dimensionResource(id = R.dimen.short1_dp)),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(horizontal = dimensionResource(R.dimen.short4_dp))
-        ){
-            LinearProgressIndicator(
-                progress = { currentLesson.toFloat() / (totalLesson - 1) },
-                modifier = Modifier
-                    .weight(1f)
-                    .sizeIn(
-                        minHeight = dimensionResource(R.dimen.short2_dp),
-                        maxHeight = dimensionResource(R.dimen.short3_dp)
-                    ),
-                color = MaterialTheme.colorScheme.primaryContainer,
-            )
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.favorite_48),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.error
-            )
-            Text(
-                text = (numLife - numError).toString(),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.error
             )
         }
     }

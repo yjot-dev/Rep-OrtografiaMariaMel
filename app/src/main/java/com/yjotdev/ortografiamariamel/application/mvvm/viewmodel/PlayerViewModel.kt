@@ -43,23 +43,23 @@ class PlayerViewModel @Inject constructor(
         }
     }
     /** Cambio de preguntas correctas por partida **/
-    fun setSuccess(currentSuccess: Int){
+    fun setSuccess(success: Int){
         _uiState.update { currentState ->
             currentState.copy(
-                success = currentSuccess,
+                success = success,
                 score = calculateTotalScore(
-                    currentSuccess = currentSuccess
+                    currentSuccess = success
                 )
             )
         }
     }
     /** Cambio de preguntas incorrectas por partida **/
-    fun setError(currentError: Int){
+    fun setError(error: Int){
         _uiState.update { currentState ->
             currentState.copy(
-                error = currentError,
+                error = error,
                 score = calculateTotalScore(
-                    currentError = currentError
+                    currentError = error
                 )
             )
         }
@@ -71,9 +71,15 @@ class PlayerViewModel @Inject constructor(
         }
     }
     /** Finaliza el juego **/
-    fun setFinishGame(state: Boolean){
+    fun setFinishGame(finishGame: Boolean){
         _uiState.update { currentState ->
-            currentState.copy(finishGame = state)
+            currentState.copy(finishGame = finishGame)
+        }
+    }
+    /** Leccion actual de la actividad **/
+    fun setCurrentLesson(currentLesson: Int){
+        _uiState.update { currentState ->
+            currentState.copy(currentLesson = currentLesson)
         }
     }
     /** Resetea la partida para jugar de nuevo con otro jugador **/

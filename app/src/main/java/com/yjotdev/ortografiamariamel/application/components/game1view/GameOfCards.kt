@@ -174,7 +174,7 @@ fun GameOfCards(
 
 @ComponentPreview
 @Composable
-private fun PreviewGame1View() {
+private fun PreviewGameOfCards() {
     OrtografiaMariaMelTheme {
         GameOfCards(
             modifier = Modifier.fillMaxSize(),

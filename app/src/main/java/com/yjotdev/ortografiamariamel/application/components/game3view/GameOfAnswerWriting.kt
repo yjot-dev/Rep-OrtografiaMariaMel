@@ -72,7 +72,7 @@ fun GameOfAnswerWriting(
 
 @ComponentPreview
 @Composable
-private fun PreviewGame2View() {
+private fun PreviewGameOfAnswerWriting() {
     OrtografiaMariaMelTheme {
         GameOfAnswerWriting(
             modifier = Modifier.fillMaxSize(),

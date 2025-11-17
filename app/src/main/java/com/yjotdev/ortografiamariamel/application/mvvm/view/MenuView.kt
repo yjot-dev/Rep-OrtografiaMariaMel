@@ -90,21 +90,21 @@ fun MenuView(
                 )
                 3 -> UnitView(
                     imageId = R.drawable.unit_two,
-                    numberUnit = 1,
+                    numberUnit = 2,
                     onTitleClicked = onTopic2Clicked,
                     onActivityClicked = onActivity2Clicked,
                     modifier = Modifier.fillMaxHeight(0.87f)
                 )
                 4 -> UnitView(
                     imageId = R.drawable.unit_three,
-                    numberUnit = 1,
+                    numberUnit = 3,
                     onTitleClicked = onTopic3Clicked,
                     onActivityClicked = onActivity3Clicked,
                     modifier = Modifier.fillMaxHeight(0.87f)
                 )
                 5 -> UnitView(
                     imageId = R.drawable.unit_four,
-                    numberUnit = 1,
+                    numberUnit = 4,
                     onTitleClicked = onTopic4Clicked,
                     onActivityClicked = onActivity4Clicked,
                     modifier = Modifier.fillMaxHeight(0.87f)

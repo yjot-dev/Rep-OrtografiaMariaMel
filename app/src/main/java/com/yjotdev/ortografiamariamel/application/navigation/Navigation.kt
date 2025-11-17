@@ -3,6 +3,7 @@ package com.yjotdev.ortografiamariamel.application.navigation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -46,9 +47,14 @@ fun Navigation(
     Scaffold(
         topBar = {
             TitleBar(
-                routeTitles = currentScreen,
+                currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                numLife = numLife,
+                numError = uiState.error,
+                currentLesson = uiState.currentLesson,
+                totalLesson = numLessons,
+                navigateUp = { navController.navigateUp() },
+                modifier = Modifier.fillMaxWidth()
             )
         }
     ) { innerPadding ->
@@ -114,6 +120,7 @@ fun Navigation(
                     listGame2 = uiState.game2data,
                     listGame3 = uiState.game3data,
                     numLessons = numLessons,
+                    currentLesson = uiState.currentLesson,
                     numLife = numLife,
                     name = uiState.name,
                     age = uiState.age,
@@ -126,6 +133,7 @@ fun Navigation(
                     onError = { vmPlayer.setError(it) },
                     onIdScenery = { vmPlayer.setIdScenery(it) },
                     onFinishGame = { vmPlayer.setFinishGame(it) },
+                    onCurrentLesson = { vmPlayer.setCurrentLesson(it) },
                     onReturnClicked = {
                         vmPlayer.resetPlayer()
                         navController.popBackStack(ViewRoutes.Start.name, false)
