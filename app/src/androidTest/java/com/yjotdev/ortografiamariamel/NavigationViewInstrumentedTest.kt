@@ -1,5 +1,6 @@
 package com.yjotdev.ortografiamariamel
 
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -8,14 +9,15 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
+import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import dagger.hilt.android.testing.HiltAndroidRule
 import com.yjotdev.ortografiamariamel.application.navigation.Navigation
 import com.yjotdev.ortografiamariamel.application.navigation.ViewRoutes
@@ -29,14 +31,21 @@ class NavigationViewInstrumentedTest {
     var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<HiltTestActivity>()
 
-    @Inject
     lateinit var navController: TestNavHostController // NavController del Test
+
+    @Before
+    fun init() {
+        hiltRule.inject()
+    }
 
     @Test
     fun navigationApp() {
         composeTestRule.setContent {
+            navController = TestNavHostController(LocalContext.current)
+            navController.navigatorProvider.addNavigator(ComposeNavigator())
+
             OrtografiaMariaMelTheme{
                 Navigation(navController = navController)
             }
@@ -52,10 +61,9 @@ class NavigationViewInstrumentedTest {
         composeTestRule.onNodeWithTag("tag_write_name")
             .performTextInput("Yasser")
         //Elige la edad del jugador
-        val targetAge = 15f
         composeTestRule.onNodeWithTag("tag_choose_age")
             .performTouchInput {
-                swipeRight(0f, targetAge)
+                swipeRight(0f, 0.7f)
             }
         //Navega a la siguiente pagina
         composeTestRule.onNodeWithText("SIGUIENTE")
