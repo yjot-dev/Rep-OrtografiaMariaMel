@@ -33,7 +33,7 @@ class NavigationViewInstrumentedTest {
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<HiltTestActivity>()
 
-    lateinit var navController: TestNavHostController // NavController del Test
+    private lateinit var navController: TestNavHostController // NavController del Test
 
     @Before
     fun init() {
