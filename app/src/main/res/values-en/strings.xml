@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Ortografia MariaMel</string>
+    <string name="start_title">Welcome to</string>
+    <string name="register_view">REGISTER</string>
+    <string name="units_view">UNITS</string>
+    <string name="button_cover">COVER</string>
+    <string name="button_start">START</string>
+    <string name="button_next">NEXT</string>
+    <string name="button_check">CHECK</string>
+    <string name="button_down">Back</string>
+    <string name="button_up">Continue</string>
+    <string name="button_back">Back</string>
+    <string name="button_restart">RESTART</string>
+    <string name="button_unit_1">UNIT I</string>
+    <string name="button_unit_2">UNIT II</string>
+    <string name="button_unit_3">UNIT III</string>
+    <string name="button_unit_4">UNIT IV</string>
+    <string name="write_name">ENTER YOUR NAME</string>
+    <string name="choose_age">AND YOUR AGE</string>
+    <string name="slider_age">%1$d YEARS</string>
+    <string name="title_unit">TOPIC</string>
+    <string name="activity_unit">ACTIVITY</string>
+    <string name="subtitle_unit_1">Diacritical mark in monosyllables</string>
+    <string name="summary_unit_1">
+        It is a graphic accent used in monosyllabic words or in
+        words that are spelled the same but have different meanings.
+        It serves to differentiate words that are written the same way
+        but have different meanings.
+        That is, it is what allows distinguishing words with identical form,
+        written with the same letters, but that belong to different
+        grammatical categories.
+    </string>
+    <string name="subtitle_unit_2">Use of C in words ending in "cimiento"</string>
+    <string name="summary_unit_2">Text for the paragraph of unit 2</string>
+    <string name="subtitle_unit_3">Use of Z in verbs ending in "ecer" and "ucir"</string>
+    <string name="summary_unit_3">Text for the paragraph of unit 3</string>
+    <string name="subtitle_unit_4">Use of the comma in enumeration</string>
+    <string name="summary_unit_4">Text for the paragraph of unit 4</string>
+    <string name="game_over">YOU RAN OUT OF LIVES\nBETTER LUCK NEXT TIME</string>
+    <string name="game_finish_lesson">CONGRATULATIONS\nYOU HAVE FINISHED THIS LESSON</string>
+    <string name="game_finish_unit">CONGRATULATIONS\nYOU HAVE FINISHED\n%1$s</string>
+    <string name="game_player">PLAYER: %1$s</string>
+    <string name="game_age">AGE: %1$d</string>
+    <string name="game_score">SCORE: %1$d</string>
+    <string name="game_success">HITS: %1$d</string>
+    <string name="game_error">MISTAKES: %1$d</string>
+    <string name="game_title_1">Choose the monosyllable with its correct type:</string>
+    <string name="game_title_2">Select and place the correct monosyllable:</string>
+    <string name="game_title_3">Write the correct answer</string>
+</resources>

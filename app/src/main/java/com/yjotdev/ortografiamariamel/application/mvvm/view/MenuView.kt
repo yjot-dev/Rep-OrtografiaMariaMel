@@ -121,7 +121,7 @@ fun MenuView(
                     textButton = stringResource(id = R.string.button_down),
                     isEnabled = !condition1,
                     modifier = Modifier
-                        .fillMaxHeight(0.9f)
+                        .fillMaxHeight(0.7f)
                         .weight(1f),
                     onClick = { nextUnit -= 1 }
                 )
@@ -129,7 +129,7 @@ fun MenuView(
                     textButton = stringResource(id = R.string.button_up),
                     isEnabled = !condition2,
                     modifier = Modifier
-                        .fillMaxHeight(0.9f)
+                        .fillMaxHeight(0.7f)
                         .weight(1f),
                     onClick = { nextUnit += 1 }
                 )

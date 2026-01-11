@@ -49,9 +49,6 @@ fun UnitView(
         ))
         RecyclerButton(
             textButton = stringResource(id = R.string.title_unit) + " $numberUnit",
-            colorButton = MaterialTheme.colorScheme.primary,
-            colorBorder = MaterialTheme.colorScheme.primary,
-            colorText = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .sizeIn(
@@ -66,9 +63,6 @@ fun UnitView(
         ))
         RecyclerButton(
             textButton = stringResource(id = R.string.activity_unit) + " $numberUnit",
-            colorButton = MaterialTheme.colorScheme.primary,
-            colorBorder = MaterialTheme.colorScheme.primary,
-            colorText = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .sizeIn(

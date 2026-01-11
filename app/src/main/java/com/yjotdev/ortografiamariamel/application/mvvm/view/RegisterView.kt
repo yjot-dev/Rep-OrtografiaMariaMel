@@ -5,10 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -76,7 +75,7 @@ fun RegisterView(
             textButton = stringResource(R.string.button_next),
             isEnabled = name.isNotBlank(),
             modifier = Modifier
-                .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
+                .height(dimensionResource(id = R.dimen.short7_dp))
                 .fillMaxWidth(0.7f),
             onClick = onNextClicked
         )
@@ -136,8 +135,7 @@ private fun ChooseAge(
             Image(
                 painter = painterResource(id = R.drawable.logo_register),
                 contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxHeight(0.5f)
+                modifier = Modifier.height(dimensionResource(id = R.dimen.short7_dp))
             )
         },
         modifier = modifier.testTag("tag_choose_age")

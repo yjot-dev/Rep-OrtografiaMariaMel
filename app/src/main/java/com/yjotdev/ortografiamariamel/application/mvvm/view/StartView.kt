@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,12 +31,12 @@ fun StartView(
     ){
         BackGroundImage(
             alpha = 1f,
-            modifier = Modifier.fillMaxHeight(0.87f)
+            modifier = Modifier.fillMaxHeight(0.84f)
         )
         RecyclerButton(
             textButton = stringResource(R.string.button_start),
             modifier = Modifier
-                .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
+                .height(dimensionResource(id = R.dimen.short7_dp))
                 .fillMaxWidth(0.7f),
             onClick = onStartClicked
         )

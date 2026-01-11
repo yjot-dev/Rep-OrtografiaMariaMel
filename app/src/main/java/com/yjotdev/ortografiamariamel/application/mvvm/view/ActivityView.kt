@@ -285,9 +285,10 @@ private fun ScorePlayer(
                 color = MaterialTheme.colorScheme.tertiary
             ),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primaryContainer
                     .copy(alpha = 0.9f)
-            )
+            ),
+            modifier = Modifier.fillMaxWidth(0.8f)
         ){
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -296,8 +297,9 @@ private fun ScorePlayer(
             ){
                 Text(
                     text = stringResource(id = R.string.game_finish_unit, numberUnit),
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    style = MaterialTheme.typography.titleLarge
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.sizeIn(
                     minHeight = dimensionResource(R.dimen.short3_dp),
@@ -378,7 +380,7 @@ private fun PreviewScorePlayer() {
     OrtografiaMariaMelTheme {
         ScorePlayer(
             modifier = Modifier.fillMaxSize(),
-            numberUnit = "1",
+            numberUnit = "UNIDAD 1",
             name = "Carlos",
             age = 11,
             score = 100,
