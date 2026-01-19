@@ -1,6 +1,5 @@
-# ORTOGRAFIA MARIAMEL
-Esta app está orientada a la educación, cuenta con varios ejercicios sobre la temática de ortografía, con dos modelos de actividades: Tarjetas de pares y Completado de oraciones con 
-multi-opciones. Los ejercicios fueron creados según la estrategia de enseñanza y aprendizaje: Gamificación.
+# ORTOGRAFIA MARIAMEL (OM)
+Esta app está orientada a la educación, cuenta con varios ejercicios sobre la temática de ortografía, con dos modelos de actividades: Tarjetas de pares y completado de oraciones con multiopciones. Los ejercicios fueron creados según la estrategia de enseñanza y aprendizaje: Gamificación.
 
 # Características principales
 - 🪟 Interfaz moderna con Jetpack Compose
@@ -33,7 +32,7 @@ multi-opciones. Los ejercicios fueron creados según la estrategia de enseñanza
   resultado del puntaje del estudiante para luego dar click en el boton reiniciar, para reiniciar el juego para una nueva partida.
 
 # Ver video Demo
-[Ver en YouTube](https://youtu.be/PAHge8WDNmU?si=AmhhfaS9qR9sWHvd)
+[Ver en YouTube](https://youtu.be/6ixV2zPoIQo)
 
 # Contribución
 - Haz un fork del repositorio
