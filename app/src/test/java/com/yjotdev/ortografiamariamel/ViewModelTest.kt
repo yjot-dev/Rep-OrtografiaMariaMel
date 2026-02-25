@@ -24,7 +24,7 @@ import com.yjotdev.ortografiamariamel.infrastructure.datasource.DataSourceGame2
 import com.yjotdev.ortografiamariamel.infrastructure.datasource.DataSourceGame3
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class PlayerViewModelTest {
+class ViewModelTest {
 
     // 1. Mock de los casos de uso (dependencias)
     private val getGame1DataUseCase: GetGame1DataUseCase = mockk()

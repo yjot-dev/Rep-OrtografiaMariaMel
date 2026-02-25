@@ -1,5 +1,5 @@
 # ORTOGRAFIA MARIAMEL (OM)
-Esta app está orientada a la educación, cuenta con varios ejercicios sobre la temática de ortografía, con dos modelos de actividades: Tarjetas de pares y completado de oraciones con multiopciones. Los ejercicios fueron creados según la estrategia de enseñanza y aprendizaje: Gamificación.
+Ortografia MariaMel (OM) es una aplicación móvil educativa diseñada para fortalecer las habilidades de ortografía en español a través de la gamificación. La app se enfoca en ofrecer una experiencia de aprendizaje interactiva y estructurada, con ejercicios basados en el contenido de un libro de texto, presentados en un formato de juego para motivar al estudiante.
 
 # Características principales
 - 🪟 Interfaz moderna con Jetpack Compose
@@ -21,15 +21,18 @@ Esta app está orientada a la educación, cuenta con varios ejercicios sobre la 
 - Material 3
 
 # Uso
-- Al abrir la app, se muestra la vista de inicio *Inicio* luego debes dar click abajo en el boton continuar
-- Luego se muestra la vista *Registro* hay el estudiante debe escribir su nombre y elegir su edad, luego debe hacer click en el boton de abajo que dice siguiente.
-- Luego se muestra la vista "Menu" y "Unidades" hay se puede ir a cada Tema o Actividad tanto desde el Menu desplegable "Menu" de la izquierda o desde la vista del centro "Unidades".
-- En la vista "Portada" se observa unicamente una imagen del libro de donde se basa el contenido de la aplicacion movil.
-- Si se hace click en una unidad se mostrara la vista "Unidad" que contiene el tema de la unidad y una descripcion de lo que se aprendera en ese apartado.
-- Si se hace click en una actividad se mostrara la vista "Actividad" que es la parte interactiva de la aplicacion, pues es un juego académico, que contiene 3 ejercicios por nivel,
-  el primer ejercicio es un juego de ordenar tarjetas con su respectivo par (Monosílabos con su ejemplo) el segundo y tercer juego es sobre completar una oracion con los respectivos
-  monosílabos, luego si gana el juego y no pierde el total de vidas sale un mensaje de felicitaciones caso contrario sale un mensaje de vuelvelo a intentar, al final se muestra el
-  resultado del puntaje del estudiante para luego dar click en el boton reiniciar, para reiniciar el juego para una nueva partida.
+El flujo de uso de la aplicación está diseñado para ser intuitivo y progresivo, guiando al usuario a través de los siguientes pasos:
+
+1. Bienvenida y Registro de Usuario: Al abrir la aplicación, el usuario es recibido en una pantalla de inicio. Para comenzar, debe registrarse proporcionando su nombre y seleccionando su edad. Este paso personaliza la experiencia y permite llevar un registro de su progreso.
+2. Acceso a Contenidos (Unidades y Portada): Una vez registrado, el usuario accede al menú principal donde puede explorar los contenidos de dos maneras:
+   - Unidades: El núcleo de la aplicación se organiza en unidades temáticas. Cada unidad presenta un tema de ortografía específico (por ejemplo, el uso de la tilde diacrítica) con una descripción clara de los conceptos que se aprenderán.
+   - Portada: Esta sección muestra una imagen del libro en el que se basa el contenido de la aplicación, conectando la experiencia digital con su fuente educativa.
+3. Aprendizaje Interactivo (Actividades): Cada unidad está asociada a una actividad gamificada que constituye la parte interactiva de la aplicación. El flujo de juego es el siguiente:
+   - Al iniciar una actividad, el usuario enfrenta una serie de tres ejercicios diseñados para reforzar el tema de la unidad. Los juegos incluyen emparejar tarjetas (por ejemplo, un monosílabo con su oración de ejemplo) y completar oraciones seleccionando la opción correcta.
+   - El sistema cuenta con un sistema de vidas. Si el usuario completa los ejercicios sin perder todas sus vidas, recibe un mensaje de felicitaciones. En caso contrario, se le anima a intentarlo de nuevo.
+   - Al finalizar, se muestra un resumen con el puntaje obtenido, permitiendo al usuario reiniciar el juego para una nueva partida y mejorar su resultado.
+
+En resumen, Ortografia MariaMel combina una estructura de contenido educativo sólido con mecánicas de juego para crear una herramienta de aprendizaje efectiva y atractiva. La aplicación guía al estudiante desde el registro y la exploración de temas hasta la práctica interactiva, proporcionando feedback inmediato sobre su desempeño y fomentando la mejora continua.
 
 # Ver video Demo
 [Ver en YouTube](https://youtu.be/6ixV2zPoIQo)
