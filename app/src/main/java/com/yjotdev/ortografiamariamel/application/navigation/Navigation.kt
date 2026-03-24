@@ -1,5 +1,6 @@
 package com.yjotdev.ortografiamariamel.application.navigation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,7 +20,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.application.mvvm.viewmodel.PlayerViewModel
 import com.yjotdev.ortografiamariamel.application.mvvm.view.ActivityView
 import com.yjotdev.ortografiamariamel.application.components.CoverView
@@ -27,17 +28,24 @@ import com.yjotdev.ortografiamariamel.application.mvvm.view.RegisterView
 import com.yjotdev.ortografiamariamel.application.mvvm.view.StartView
 import com.yjotdev.ortografiamariamel.application.mvvm.view.TopicView
 import com.yjotdev.ortografiamariamel.application.mvvm.view.MenuView
+import com.yjotdev.ortografiamariamel.application.utils.Helper
+import com.yjotdev.ortografiamariamel.R
 
 @Composable
 fun Navigation(
     navController: NavHostController = rememberNavController(),
     vmPlayer: PlayerViewModel = hiltViewModel()
 ){
-    val uiState by vmPlayer.uiState.collectAsState()
+    //Contexto de la aplicación
+    val context = LocalContext.current
+    //Mensajes de error
+    val toastInvalidUser = stringResource(R.string.toast_invalid_user)
     //Número de lecciones a revisar por unidad incluyendo la ventana puntaje
     val numLessons = 4
     //Número de vidas del jugador
     val numLife = 3
+    //Lectura de estados del jugador
+    val uiState by vmPlayer.uiState.collectAsState()
     //Vista ToolBarMenu
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = ViewRoutes.valueOf(
@@ -75,7 +83,13 @@ fun Navigation(
                     age = uiState.age,
                     onName = { vmPlayer.setName(it) },
                     onAge = { vmPlayer.setAge(it) },
-                    onNextClicked = { navController.navigate(ViewRoutes.Menu.name) },
+                    onNextClicked = {
+                        if (Helper.isValidUser(uiState.name)) {
+                            navController.navigate(ViewRoutes.Menu.name)
+                        }else {
+                            Toast.makeText(context, toastInvalidUser, Toast.LENGTH_SHORT).show()
+                        }
+                    },
                     modifier = Modifier.fillMaxSize()
                 )
             }

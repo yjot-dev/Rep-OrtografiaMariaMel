@@ -47,4 +47,5 @@
     <string name="game_title_1">Choose the monosyllable with its correct type:</string>
     <string name="game_title_2">Select and place the correct monosyllable:</string>
     <string name="game_title_3">Write the correct answer</string>
+    <string name="toast_invalid_user">INVALID USER</string>
 </resources>

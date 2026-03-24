@@ -47,4 +47,5 @@
     <string name="game_title_1">Elija el monosilabo con su tipo correcto:</string>
     <string name="game_title_2">Selecciona y ubica el monosilabo correcto:</string>
     <string name="game_title_3">Escriba la respuesta correcta</string>
+    <string name="toast_invalid_user">USUARIO INVALIDO</string>
 </resources>
