@@ -1,6 +1,7 @@
 package com.yjotdev.ortografiamariamel.application.mvvm.view
 
 import android.media.MediaPlayer
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Card
@@ -32,7 +34,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.application.theme.OrtografiaMariaMelTheme
 import com.yjotdev.ortografiamariamel.application.components.BackGroundImage
 import com.yjotdev.ortografiamariamel.application.components.CoverView
@@ -45,6 +46,7 @@ import com.yjotdev.ortografiamariamel.application.utils.ComponentPreview
 import com.yjotdev.ortografiamariamel.domain.entity.Game1Entity
 import com.yjotdev.ortografiamariamel.domain.entity.Game2Entity
 import com.yjotdev.ortografiamariamel.domain.entity.Game3Entity
+import com.yjotdev.ortografiamariamel.R
 
 @Composable
 fun ActivityView(
@@ -103,12 +105,19 @@ fun ActivityView(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
-                alpha = 0.7f)
+                alpha = 0.7f
+            )
+        } else {
+            BackGroundImage(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+            )
         }
         //Animaciones y vista del juego
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.Center
         ){
             when{
                 condition1 -> {
@@ -118,9 +127,8 @@ fun ActivityView(
                         exit = scaleOut()){
                         MessageAnimation(
                             idMessage = R.string.game_finish_lesson,
-                            modifier = Modifier
-                                .fillMaxHeight(0.87f)
-                                .fillMaxWidth(0.94f)
+                            idImage = R.drawable.happy_students,
+                            modifier = Modifier.fillMaxWidth(0.85f)
                         )
                     }
                 }
@@ -134,9 +142,7 @@ fun ActivityView(
                         score = score,
                         success = success,
                         error = error,
-                        modifier = Modifier
-                            .fillMaxHeight(0.87f)
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(0.8f)
                     )
                 }
                 condition3 -> {
@@ -146,9 +152,8 @@ fun ActivityView(
                         exit = scaleOut()){
                         MessageAnimation(
                             idMessage = R.string.game_over,
-                            modifier = Modifier
-                                .fillMaxHeight(0.87f)
-                                .fillMaxWidth(0.94f)
+                            idImage = R.drawable.sad_students,
+                            modifier = Modifier.fillMaxWidth(0.85f)
                         )
                     }
                 }
@@ -166,9 +171,7 @@ fun ActivityView(
                                 onFinishGame = onFinishGame,
                                 onSuccess = onSuccess,
                                 onError = onError,
-                                modifier = Modifier
-                                    .fillMaxHeight(0.87f)
-                                    .fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                         2 -> {
@@ -183,9 +186,7 @@ fun ActivityView(
                                 onFinishGame = onFinishGame,
                                 onSuccess = onSuccess,
                                 onError = onError,
-                                modifier = Modifier
-                                    .fillMaxHeight(0.87f)
-                                    .fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                         3 -> {
@@ -200,21 +201,20 @@ fun ActivityView(
                                 onFinishGame = onFinishGame,
                                 onSuccess = onSuccess,
                                 onError = onError,
-                                modifier = Modifier
-                                    .fillMaxHeight(0.87f)
-                                    .fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.short5_dp)))
             RecyclerButton(
                 textButton =
                     if(!condition2) stringResource(R.string.button_next)
                     else stringResource(R.string.button_restart),
                 isEnabled = condition1 || condition2 || condition3,
                 modifier = Modifier
-                    .padding(vertical = dimensionResource(id = R.dimen.short2_dp))
+                    .height(dimensionResource(id = R.dimen.short7_dp))
                     .fillMaxWidth(0.7f),
                 onClick = {
                     //Pasa al siguiente juego y resetea el actual
@@ -235,32 +235,28 @@ fun ActivityView(
 @Composable
 private fun MessageAnimation(
     modifier: Modifier = Modifier,
-    @StringRes idMessage: Int)
-{
+    @StringRes idMessage: Int,
+    @DrawableRes idImage: Int
+){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ){
-        Text(
-            text = stringResource(id = idMessage),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = dimensionResource(R.dimen.short3_dp))
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        Box(modifier = Modifier
+            .background(MaterialTheme.colorScheme.primaryContainer
+                .copy(alpha = 0.5f))
         ){
-            GifImage(idImage = R.drawable.student_one_animated,
-                modifier = Modifier.weight(1f)
-            )
-            GifImage(idImage = R.drawable.student_two_animated,
-                modifier = Modifier.weight(1f)
+            Text(
+                text = stringResource(id = idMessage),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier
+                    .padding(dimensionResource(R.dimen.short3_dp))
             )
         }
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.short5_dp)))
+        GifImage(idImage = idImage)
     }
 }
 
@@ -274,74 +270,68 @@ private fun ScorePlayer(
     success: Int,
     error: Int
 ){
-    Box(
-        contentAlignment = Alignment.Center,
+    Card(
+        border = BorderStroke(
+            width = dimensionResource(id = R.dimen.short2_dp),
+            color = MaterialTheme.colorScheme.tertiary
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+                .copy(alpha = 0.9f)
+        ),
         modifier = modifier
     ){
-        BackGroundImage(modifier = modifier)
-        Card(
-            border = BorderStroke(
-                width = dimensionResource(id = R.dimen.short2_dp),
-                color = MaterialTheme.colorScheme.tertiary
-            ),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-                    .copy(alpha = 0.9f)
-            ),
-            modifier = Modifier.fillMaxWidth(0.8f)
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.short4_dp))
         ){
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.short4_dp))
-            ){
-                Text(
-                    text = stringResource(id = R.string.game_finish_unit, numberUnit),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.sizeIn(
-                    minHeight = dimensionResource(R.dimen.short3_dp),
-                    maxHeight = dimensionResource(R.dimen.short4_dp)
-                ))
-                ScoreItems(
-                    textItem = stringResource(id = R.string.game_player, name.uppercase()),
-                    iconItem = ImageVector.vectorResource(id = R.drawable.player_48)
-                )
-                Spacer(modifier = Modifier.sizeIn(
-                    minHeight = dimensionResource(R.dimen.short1_dp),
-                    maxHeight = dimensionResource(R.dimen.short2_dp)
-                ))
-                ScoreItems(
-                    textItem = stringResource(id = R.string.game_age, age),
-                    iconItem = ImageVector.vectorResource(id = R.drawable.age_48)
-                )
-                Spacer(modifier = Modifier.sizeIn(
-                    minHeight = dimensionResource(R.dimen.short1_dp),
-                    maxHeight = dimensionResource(R.dimen.short2_dp)
-                ))
-                ScoreItems(
-                    textItem = stringResource(id = R.string.game_score, score),
-                    iconItem = ImageVector.vectorResource(id = R.drawable.score_48)
-                )
-                Spacer(modifier = Modifier.sizeIn(
-                    minHeight = dimensionResource(R.dimen.short1_dp),
-                    maxHeight = dimensionResource(R.dimen.short2_dp)
-                ))
-                ScoreItems(
-                    textItem = stringResource(id = R.string.game_success, success),
-                    iconItem = ImageVector.vectorResource(id = R.drawable.correct_48)
-                )
-                Spacer(modifier = Modifier.sizeIn(
-                    minHeight = dimensionResource(R.dimen.short1_dp),
-                    maxHeight = dimensionResource(R.dimen.short2_dp)
-                ))
-                ScoreItems(
-                    textItem = stringResource(id = R.string.game_error, error),
-                    iconItem = ImageVector.vectorResource(id = R.drawable.incorrect_48)
-                )
-            }
+            Text(
+                text = stringResource(id = R.string.game_finish_unit, numberUnit),
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.sizeIn(
+                minHeight = dimensionResource(R.dimen.short3_dp),
+                maxHeight = dimensionResource(R.dimen.short4_dp)
+            ))
+            ScoreItems(
+                textItem = stringResource(id = R.string.game_player, name.uppercase()),
+                iconItem = ImageVector.vectorResource(id = R.drawable.player_48)
+            )
+            Spacer(modifier = Modifier.sizeIn(
+                minHeight = dimensionResource(R.dimen.short1_dp),
+                maxHeight = dimensionResource(R.dimen.short2_dp)
+            ))
+            ScoreItems(
+                textItem = stringResource(id = R.string.game_age, age),
+                iconItem = ImageVector.vectorResource(id = R.drawable.age_48)
+            )
+            Spacer(modifier = Modifier.sizeIn(
+                minHeight = dimensionResource(R.dimen.short1_dp),
+                maxHeight = dimensionResource(R.dimen.short2_dp)
+            ))
+            ScoreItems(
+                textItem = stringResource(id = R.string.game_score, score),
+                iconItem = ImageVector.vectorResource(id = R.drawable.score_48)
+            )
+            Spacer(modifier = Modifier.sizeIn(
+                minHeight = dimensionResource(R.dimen.short1_dp),
+                maxHeight = dimensionResource(R.dimen.short2_dp)
+            ))
+            ScoreItems(
+                textItem = stringResource(id = R.string.game_success, success),
+                iconItem = ImageVector.vectorResource(id = R.drawable.correct_48)
+            )
+            Spacer(modifier = Modifier.sizeIn(
+                minHeight = dimensionResource(R.dimen.short1_dp),
+                maxHeight = dimensionResource(R.dimen.short2_dp)
+            ))
+            ScoreItems(
+                textItem = stringResource(id = R.string.game_error, error),
+                iconItem = ImageVector.vectorResource(id = R.drawable.incorrect_48)
+            )
         }
     }
 }

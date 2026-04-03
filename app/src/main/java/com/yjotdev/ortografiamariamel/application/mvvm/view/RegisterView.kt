@@ -51,9 +51,10 @@ fun RegisterView(
             modifier = Modifier.fillMaxWidth(0.7f)
         )
         Image(
-            painter = painterResource(id = R.drawable.app_pencil),
+            painter = painterResource(id = R.drawable.app_student),
             contentDescription = null,
-            contentScale = ContentScale.Fit
+            contentScale = ContentScale.Fit,
+            modifier = Modifier.height(dimensionResource(id = R.dimen.medium4_dp))
         )
         WriteName(
             labelId = R.string.write_name,
@@ -133,7 +134,7 @@ private fun ChooseAge(
         ),
         thumb = {
             Image(
-                painter = painterResource(id = R.drawable.logo_register),
+                painter = painterResource(id = R.drawable.app_student),
                 contentDescription = null,
                 modifier = Modifier.height(dimensionResource(id = R.dimen.short7_dp))
             )

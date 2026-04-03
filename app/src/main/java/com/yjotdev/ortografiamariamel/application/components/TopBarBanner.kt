@@ -25,8 +25,8 @@ fun TopBarBanner(
         modifier = modifier
     ){
         Icon(
-            painter = painterResource(id = R.drawable.app_shield),
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            painter = painterResource(id = R.drawable.app_student),
+            tint = Color.Unspecified,
             contentDescription = null,
             modifier = Modifier.size(dimensionResource(R.dimen.short6_dp))
         )

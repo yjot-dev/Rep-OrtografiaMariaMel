@@ -2,7 +2,7 @@ package com.yjotdev.ortografiamariamel.application.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -24,20 +24,14 @@ fun TopBarProgress(
     numError: Int
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(
-            space = dimensionResource(id = R.dimen.short1_dp)),
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ){
         LinearProgressIndicator(
             progress = { currentLesson.toFloat() / (totalLesson - 1) },
-            modifier = Modifier
-                .weight(1f)
-                .sizeIn(
-                    minHeight = dimensionResource(R.dimen.short2_dp),
-                    maxHeight = dimensionResource(R.dimen.short3_dp)
-                ),
-            color = MaterialTheme.colorScheme.primaryContainer,
+            modifier = Modifier.height(dimensionResource(id = R.dimen.short4_dp)),
+            color = MaterialTheme.colorScheme.error,
         )
         Icon(
             imageVector = ImageVector.vectorResource(id = R.drawable.favorite_48),

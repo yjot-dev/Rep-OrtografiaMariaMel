@@ -3,7 +3,6 @@ package com.yjotdev.ortografiamariamel.application.mvvm.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,12 +25,12 @@ fun StartView(
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = modifier.background(MaterialTheme.colorScheme.onPrimary)
     ){
         BackGroundImage(
             alpha = 1f,
-            modifier = Modifier.fillMaxHeight(0.84f)
+            modifier = Modifier.fillMaxWidth(0.7f)
         )
         RecyclerButton(
             textButton = stringResource(R.string.button_start),

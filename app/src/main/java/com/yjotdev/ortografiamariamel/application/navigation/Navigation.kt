@@ -156,22 +156,22 @@ fun Navigation(
                 )
             }
             composable(route = ViewRoutes.TopicUnit2.name){
-                TODO("Pendiente de realizar")
+               //Pendiente de realizar
             }
             composable(route = ViewRoutes.ActivityUnit2.name){
-                TODO("Pendiente de realizar")
+                //Pendiente de realizar
             }
             composable(route = ViewRoutes.TopicUnit3.name){
-                TODO("Pendiente de realizar")
+                //Pendiente de realizar
             }
             composable(route = ViewRoutes.ActivityUnit3.name){
-                TODO("Pendiente de realizar")
+                //Pendiente de realizar
             }
             composable(route = ViewRoutes.TopicUnit4.name){
-                TODO("Pendiente de realizar")
+                //Pendiente de realizar
             }
             composable(route = ViewRoutes.ActivityUnit4.name){
-                TODO("Pendiente de realizar")
+                //Pendiente de realizar
             }
             composable(route = ViewRoutes.Cover.name){
                 Column(modifier = Modifier

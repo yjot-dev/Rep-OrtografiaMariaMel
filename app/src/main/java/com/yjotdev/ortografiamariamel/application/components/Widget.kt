@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -73,7 +72,10 @@ fun RecyclerButton(
 }
 
 @Composable
-fun GifImage(modifier: Modifier = Modifier,@DrawableRes idImage: Int){
+fun GifImage(
+    modifier: Modifier = Modifier,
+    @DrawableRes idImage: Int
+){
     val context = LocalContext.current
     val imageLoader = ImageLoader.Builder(context)
         .components {
@@ -102,15 +104,7 @@ fun BackGroundImage(
         modifier = modifier
     ){
         Image(
-            painter = painterResource(id = R.drawable.app_shield),
-            alpha = alpha,
-            colorFilter = ColorFilter
-                .tint(MaterialTheme.colorScheme.onPrimaryContainer),
-            contentDescription = null,
-            contentScale = ContentScale.Fit
-        )
-        Image(
-            painter = painterResource(id = R.drawable.app_pencil),
+            painter = painterResource(id = R.drawable.app_student),
             alpha = alpha,
             contentDescription = null,
             contentScale = ContentScale.Fit
