@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Ortografia MariaMel"
+rootProject.name = "Ortografia Plus"
 include(":app")
