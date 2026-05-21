@@ -18,10 +18,10 @@ import org.junit.Test
 import com.yjotdev.ortografiamariamel.domain.usecase.GetGame1DataUseCase
 import com.yjotdev.ortografiamariamel.domain.usecase.GetGame2DataUseCase
 import com.yjotdev.ortografiamariamel.domain.usecase.GetGame3DataUseCase
-import com.yjotdev.ortografiamariamel.application.mvvm.viewmodel.PlayerViewModel
-import com.yjotdev.ortografiamariamel.infrastructure.datasource.DataSourceGame1
-import com.yjotdev.ortografiamariamel.infrastructure.datasource.DataSourceGame2
-import com.yjotdev.ortografiamariamel.infrastructure.datasource.DataSourceGame3
+import com.yjotdev.ortografiamariamel.presentation.mvvm.viewmodel.UiViewModel
+import com.yjotdev.ortografiamariamel.data.local.Game1Local
+import com.yjotdev.ortografiamariamel.data.local.Game2Local
+import com.yjotdev.ortografiamariamel.data.local.Game3Local
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ViewModelTest {
@@ -32,7 +32,7 @@ class ViewModelTest {
     private val getGame3DataUseCase: GetGame3DataUseCase = mockk()
 
     // 2. ViewModel a probar
-    private lateinit var viewModel: PlayerViewModel
+    private lateinit var viewModel: UiViewModel
 
     // 3. Dispatcher para pruebas de corrutinas
     private val testDispatcher = StandardTestDispatcher()
@@ -42,7 +42,7 @@ class ViewModelTest {
         // Configuramos el hilo principal para pruebas
         Dispatchers.setMain(testDispatcher)
 
-        viewModel = PlayerViewModel(
+        viewModel = UiViewModel(
             getGame1DataUseCase,
             getGame2DataUseCase,
             getGame3DataUseCase
@@ -151,9 +151,9 @@ class ViewModelTest {
     fun loadGamesCallsUseCasesAndUpdatesState() = runTest {
         // Given
         // Simulamos datos de retorno de los casos de uso
-        val mockGame1Data = DataSourceGame1.listPairOfCardsUnit1
-        val mockGame2Data = DataSourceGame2.listQuestionAndAnswersUnit1
-        val mockGame3Data = DataSourceGame3.listQuestionAndAnswersUnit1
+        val mockGame1Data = Game1Local.listPairOfCardsUnit1
+        val mockGame2Data = Game2Local.listQuestionAndAnswersUnit1
+        val mockGame3Data = Game3Local.listQuestionAndAnswersUnit1
 
         // CoEvery se usa porque loadGames lanza corrutina que llama a estos metodos
         coEvery { getGame1DataUseCase(any()) } returns mockGame1Data

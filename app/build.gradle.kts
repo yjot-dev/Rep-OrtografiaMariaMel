@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.yjotdev.ortografiamariamel"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.yjotdev.ortografiamariamel"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 6
         versionName = "1.6"
         testInstrumentationRunner = "com.yjotdev.ortografiamariamel.CustomTestRunner"
@@ -48,11 +48,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -79,27 +79,22 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.android)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout.compose)
-
     // --- Compose (usando la BoM - Bill of Materials) ---
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-
     // --- Navigation ---
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-
     // --- Coil (Image Loading) ---
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
-
     // --- Hilt ---
     implementation(libs.dagger.hilt.android)
     implementation(libs.hilt.navigation.compose)
     ksp(libs.dagger.hilt.android.compiler)
-
     // --- Testing ---
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
@@ -111,7 +106,6 @@ dependencies {
     androidTestImplementation(libs.dagger.hilt.android.testing)
     androidTestImplementation(libs.androidx.navigation.testing)
     kspAndroidTest(libs.dagger.hilt.android.compiler)
-
     // --- Debug ---
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)

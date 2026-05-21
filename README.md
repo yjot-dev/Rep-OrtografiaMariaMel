@@ -5,7 +5,8 @@ Ortografia Plus (O-Plus) es una aplicación móvil educativa diseñada para fort
 - 🪟 Interfaz moderna con Jetpack Compose
 - 🌐 Navegación con Navigation Component
 - 📊 Integración con ViewModel + StateFlow
-- 🎨 Patrón de diseño arquitectónico con MVVM
+- 🎨 Patrón de diseño arquitectónico con MVVM + Clean Architecture
+- 💉 Inyección de dependencias con Hilt
 - 📱 Compatible con Android 7.0 (API 24) en adelante
 
 # Instalación

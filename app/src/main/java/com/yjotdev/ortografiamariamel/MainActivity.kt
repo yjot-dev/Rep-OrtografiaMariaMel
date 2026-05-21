@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
-import com.yjotdev.ortografiamariamel.application.navigation.Navigation
-import com.yjotdev.ortografiamariamel.application.theme.OrtografiaMariaMelTheme
+import com.yjotdev.ortografiamariamel.presentation.navigation.Navigation
+import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

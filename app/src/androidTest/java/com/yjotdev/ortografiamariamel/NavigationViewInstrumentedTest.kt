@@ -19,9 +19,9 @@ import org.junit.runner.RunWith
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import dagger.hilt.android.testing.HiltAndroidRule
-import com.yjotdev.ortografiamariamel.application.navigation.Navigation
-import com.yjotdev.ortografiamariamel.application.navigation.ViewRoutes
-import com.yjotdev.ortografiamariamel.application.theme.OrtografiaMariaMelTheme
+import com.yjotdev.ortografiamariamel.presentation.navigation.Navigation
+import com.yjotdev.ortografiamariamel.presentation.navigation.ViewRoutes
+import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)

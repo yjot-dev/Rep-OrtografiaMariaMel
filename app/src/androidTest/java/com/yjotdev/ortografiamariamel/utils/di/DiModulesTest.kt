@@ -5,9 +5,9 @@ import dagger.Binds
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import com.yjotdev.ortografiamariamel.domain.port.GamesPort
-import com.yjotdev.ortografiamariamel.infrastructure.di.DiModules
-import com.yjotdev.ortografiamariamel.utils.repository.FakeGamesRepository
+import com.yjotdev.ortografiamariamel.domain.repository.GamesRepository
+import com.yjotdev.ortografiamariamel.data.di.DiModules
+import com.yjotdev.ortografiamariamel.utils.repository.FakeGamesRepositoryImpl
 
 @Module
 @TestInstallIn(
@@ -19,6 +19,6 @@ abstract class DiModulesTest {
     @Binds
     @Singleton
     abstract fun bindFakeGamesRepository(
-        impl: FakeGamesRepository
-    ): GamesPort
+        impl: FakeGamesRepositoryImpl
+    ): GamesRepository
 }
