@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
 import com.yjotdev.ortografiamariamel.presentation.components.RecyclerButton
+import com.yjotdev.ortografiamariamel.presentation.utils.TestTags
 import com.yjotdev.ortografiamariamel.presentation.utils.ComponentPreview
 
 @Composable
@@ -77,7 +78,8 @@ fun RegisterView(
             isEnabled = name.isNotBlank(),
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.short7_dp))
-                .fillMaxWidth(0.7f),
+                .fillMaxWidth(0.7f)
+                .testTag(TestTags.REGISTER_VIEW_BTN_NEXT),
             onClick = onNextClicked
         )
     }
@@ -102,7 +104,7 @@ private fun WriteName(
         onValueChange = onValueChange,
         keyboardOptions = keyboardOption,
         singleLine = true,
-        modifier = modifier.testTag("tag_write_name")
+        modifier = modifier.testTag(TestTags.TEXT_FIELD_WRITE_NAME)
     )
 }
 
@@ -139,7 +141,7 @@ private fun ChooseAge(
                 modifier = Modifier.height(dimensionResource(id = R.dimen.short7_dp))
             )
         },
-        modifier = modifier.testTag("tag_choose_age")
+        modifier = modifier.testTag(TestTags.SLIDER_CHOOSE_AGE)
     )
     Text(
         text = stringResource(id = labelId2, value.toInt()),

@@ -2,9 +2,7 @@ package com.yjotdev.ortografiamariamel
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
@@ -22,6 +20,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import com.yjotdev.ortografiamariamel.presentation.navigation.Navigation
 import com.yjotdev.ortografiamariamel.presentation.navigation.ViewRoutes
 import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
+import com.yjotdev.ortografiamariamel.presentation.utils.TestTags
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -52,60 +51,60 @@ class NavigationViewInstrumentedTest {
         }
         //Verifica si esta en la pagina inicial
         assertEquals(ViewRoutes.Start.name, navController.currentBackStackEntry?.destination?.route)
-        //Navega a la siguiente pagina
-        composeTestRule.onNodeWithText("COMENZAR")
+        //Navega a la siguiente página
+        composeTestRule.onNodeWithTag(TestTags.START_VIEW_BTN_START)
             .performClick()
         //Verifica si esta en la pagina de registro
         assertEquals(ViewRoutes.Register.name, navController.currentBackStackEntry?.destination?.route)
         //Escribe el nombre del jugador
-        composeTestRule.onNodeWithTag("tag_write_name")
+        composeTestRule.onNodeWithTag(TestTags.TEXT_FIELD_WRITE_NAME)
             .performTextInput("Yasser")
         //Elige la edad del jugador
-        composeTestRule.onNodeWithTag("tag_choose_age")
+        composeTestRule.onNodeWithTag(TestTags.SLIDER_CHOOSE_AGE)
             .performTouchInput {
                 swipeRight(0f, 0.7f)
             }
-        //Navega a la siguiente pagina
-        composeTestRule.onNodeWithText("SIGUIENTE")
+        //Navega a la siguiente página
+        composeTestRule.onNodeWithTag(TestTags.REGISTER_VIEW_BTN_NEXT)
             .performClick()
-        //Verifica si esta en la pagina de menu
+        //Verifica si está en la pagina de menu
         assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
-        composeTestRule.onNodeWithTag("Menu").performClick()
-        //Navega a la pagina de portada
-        composeTestRule.onNodeWithText("PORTADA")
+        composeTestRule.onNodeWithTag(TestTags.MENU).performClick()
+        //Navega a la página de portada
+        composeTestRule.onNodeWithTag(TestTags.MENU_BTN_COVER)
             .performClick()
-        //Verifica si esta en la pagina de portada
+        //Verifica si está en la página de portada
         assertEquals(ViewRoutes.Cover.name, navController.currentBackStackEntry?.destination?.route)
-        //Navega hacia atras
-        composeTestRule.onNodeWithContentDescription("Volver")
+        //Navega hacia atrás
+        composeTestRule.onNodeWithTag(TestTags.BTN_BACK)
             .performClick()
-        //Verifica si esta en la pagina de menu
+        //Verifica si está en la página de menu
         assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
-        composeTestRule.onNodeWithTag("Menu").performClick()
+        composeTestRule.onNodeWithTag(TestTags.MENU).performClick()
         //Despliega opciones de la unidad 1
-        composeTestRule.onNodeWithTag("unidad_1")
+        composeTestRule.onNodeWithTag(TestTags.UNIT_ITEM)
             .performClick()
         //Navega a la pagina del tema de la unidad 1
-        composeTestRule.onNodeWithTag("tema_1")
+        composeTestRule.onNodeWithTag(TestTags.THEME_ITEM)
             .performClick()
         //Verifica si esta en la pagina del tema de la unidad 1
         assertEquals(ViewRoutes.TopicUnit1.name, navController.currentBackStackEntry?.destination?.route)
-        //Navega hacia atras
-        composeTestRule.onNodeWithContentDescription("Volver")
+        //Navega hacia atrás
+        composeTestRule.onNodeWithTag(TestTags.BTN_BACK)
             .performClick()
-        //Verifica si esta en la pagina de menu
+        //Verifica si está en la página de menu
         assertEquals(ViewRoutes.Menu.name, navController.currentBackStackEntry?.destination?.route)
         //Muestra el menu
-        composeTestRule.onNodeWithTag("Menu").performClick()
+        composeTestRule.onNodeWithTag(TestTags.MENU).performClick()
         //Despliega opciones de la unidad 1
-        composeTestRule.onNodeWithTag("unidad_1")
+        composeTestRule.onNodeWithTag(TestTags.UNIT_ITEM)
             .performClick()
-        //Navega a la pagina de la actividad de la unidad 1
-        composeTestRule.onNodeWithTag("actividad_1")
+        //Navega a la página de la actividad de la unidad 1
+        composeTestRule.onNodeWithTag(TestTags.ACTIVITY_ITEM)
             .performClick()
-        //Verifica si esta en la pagina de la actividad de la unidad 1
+        //Verifica si está en la página de la actividad de la unidad 1
         assertEquals(ViewRoutes.ActivityUnit1.name, navController.currentBackStackEntry?.destination?.route)
     }
 }

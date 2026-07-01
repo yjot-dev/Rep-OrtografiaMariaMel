@@ -47,6 +47,7 @@ import androidx.compose.ui.res.vectorResource
 import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
 import com.yjotdev.ortografiamariamel.presentation.components.RecyclerButton
+import com.yjotdev.ortografiamariamel.presentation.utils.TestTags
 import com.yjotdev.ortografiamariamel.presentation.utils.ComponentPreview
 
 @Composable
@@ -168,7 +169,8 @@ fun MenuView(
                                 minHeight = dimensionResource(id = R.dimen.short7_dp),
                                 maxHeight = dimensionResource(id = R.dimen.medium3_dp)
                             )
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .testTag(TestTags.MENU_BTN_COVER),
                         onClick = onCoverClicked
                     )
                     Spacer(modifier = Modifier.sizeIn(
@@ -266,7 +268,7 @@ fun MenuView(
             modifier = Modifier
                 .fillMaxWidth(0.16f)
                 .fillMaxHeight(0.1f)
-                .testTag("Menu"),
+                .testTag(TestTags.MENU),
             containerColor = MaterialTheme.colorScheme.onPrimary
                 .copy(0.8f),
             onClick = {
@@ -298,6 +300,9 @@ private fun ItemMenu(
     onTopicClicked: () -> Unit,
     onActivityClicked: () -> Unit
 ){
+    val tagUnidad = TestTags.UNIT_ITEM.substring(0, 10)
+    val tagTema = TestTags.THEME_ITEM.substring(0, 11)
+    val tagActividad = TestTags.ACTIVITY_ITEM.substring(0, 14)
     val backgroundColor by animateColorAsState(
         if (isVisible) MaterialTheme.colorScheme.onPrimary
         else MaterialTheme.colorScheme.primary, label = "")
@@ -320,7 +325,7 @@ private fun ItemMenu(
             shape = RoundedCornerShape(dimensionResource(id = R.dimen.short4_dp)),
             styleText = MaterialTheme.typography.titleSmall,
             onClick = onVisible,
-            modifier = modifier.testTag("unidad_$itemText")
+            modifier = modifier.testTag("$tagUnidad$itemText")
         )
         AnimatedVisibility(visible = isVisible){
             Column(
@@ -334,7 +339,7 @@ private fun ItemMenu(
                     colorText = MaterialTheme.colorScheme.onPrimaryContainer,
                     styleText = MaterialTheme.typography.titleSmall,
                     onClick = onTopicClicked,
-                    modifier = modifier.testTag("tema_$itemText")
+                    modifier = modifier.testTag("$tagTema$itemText")
                 )
                 RecyclerButton(
                     textButton = stringResource(id = R.string.activity_unit),
@@ -343,7 +348,7 @@ private fun ItemMenu(
                     colorText = MaterialTheme.colorScheme.onPrimaryContainer,
                     styleText = MaterialTheme.typography.titleSmall,
                     onClick = onActivityClicked,
-                    modifier = modifier.testTag("actividad_$itemText")
+                    modifier = modifier.testTag("$tagActividad$itemText")
                 )
             }
         }

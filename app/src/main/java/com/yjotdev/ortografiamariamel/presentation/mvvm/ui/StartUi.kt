@@ -10,12 +10,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.presentation.theme.OrtografiaMariaMelTheme
 import com.yjotdev.ortografiamariamel.presentation.components.BackGroundImage
 import com.yjotdev.ortografiamariamel.presentation.components.RecyclerButton
+import com.yjotdev.ortografiamariamel.presentation.utils.TestTags
 import com.yjotdev.ortografiamariamel.presentation.utils.ComponentPreview
 
 @Composable
@@ -36,7 +38,8 @@ fun StartView(
             textButton = stringResource(R.string.button_start),
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.short7_dp))
-                .fillMaxWidth(0.7f),
+                .fillMaxWidth(0.7f)
+                .testTag(TestTags.START_VIEW_BTN_START),
             onClick = onStartClicked
         )
     }

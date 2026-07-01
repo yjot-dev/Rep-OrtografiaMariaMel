@@ -10,11 +10,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import com.yjotdev.ortografiamariamel.R
 import com.yjotdev.ortografiamariamel.presentation.navigation.ViewRoutes
+import com.yjotdev.ortografiamariamel.presentation.utils.TestTags
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +64,10 @@ fun TitleBar(
         ),
         navigationIcon = {
             if(canNavigateBack){
-                IconButton(onClick = navigateUp){
+                IconButton(
+                    onClick = navigateUp,
+                    modifier = Modifier.testTag(TestTags.BTN_BACK)
+                ){
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.arrow_back_48),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer,
