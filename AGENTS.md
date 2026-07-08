@@ -55,7 +55,6 @@ Se debe seguir estrictamente la siguiente organización de directorios, adaptada
 ## 5. RESTRICCIONES CRÍTICAS (PROHIBICIONES)
 - **Dependencias:** No añadir ni actualizar dependencias en `build.gradle` o `libs.versions.toml` sin avisar previamente.
 - **Seguridad:** **NUNCA** incluir ni subir al repositorio remoto los siguientes archivos:
-    - `.gitignore` (para su edición)
     - `local.properties`
     - `custom.properties`
 
