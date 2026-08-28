@@ -15,7 +15,7 @@ coroutines-test = "1.9.0"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 constraintlayoutCompose = "1.1.2"
-# BOM
+# BOM de mediados de 2025 para estabilidad en 2026
 composeBom = "2025.02.00"
 # Coil
 coil = "2.7.0"
